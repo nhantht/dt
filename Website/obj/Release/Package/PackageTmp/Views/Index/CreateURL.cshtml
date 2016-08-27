@@ -1,0 +1,362 @@
+﻿@model Website.Models.EditURLViewModels
+<div style="width:40%;display:inline-block">
+    <div class="form">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "messagePanel" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            <div>
+                <label class="control-label">Paste or type URL</label>
+                <label class="pull-right" id="urlStatus" style="color:red"></label>
+            </div>
+            @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @class = "form-control", maxlength = 1000, onblur = "URLObj.getURLContent(this)" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Budget, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Budget, new { htmlAttributes = new { @class = "form-control", maxlength = 18 } })
+    </div>
+    <div class="form-group">
+        <label class="control-label" style="position:relative;top:-29px">Status</label>
+        <div style="display:inline-block">
+            <div>
+                @{
+                    string statusOn = Model.Status ? "checked" : string.Empty;
+                    string statusOff = !Model.Status ? "checked" : string.Empty;
+                }
+                <input type="radio" id="status" name="status" value="On" @statusOn />
+                <label class="control-label" style="color:green">On</label>
+            </div>
+            <div>
+                <input type="radio" id="status" name="status" value="Off" @statusOff />
+                <label class="control-label" style="color:red">Off</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label" style="position:relative;top:-57px">Device</label>
+        <div style="display:inline-block">
+            @{
+                Service.ADV.Device deviceObj = new Service.ADV.Device();
+                IEnumerable<Data.DeviceType> deviceList = deviceObj.GetList(0);
+                string checkedString = "checked";
+                foreach (Data.DeviceType device in deviceList)
+                {
+                    <div>
+                        <input type="checkbox" @checkedString id="device_@device.Id" onclick="URLObj.addDevice(this, @device.Id, '@device.Name')" name="device_@device.Id" value="@device.Id" />
+                        <label class="control-label">@device.Name</label>
+                    </div>
+                    if (checkedString.Length > 0)
+                    {
+                        checkedString = string.Empty;
+                    }
+                }
+            }
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Customize Ad in </label>
+        <select id="lstSelectingDevice" class="adv-device select-no-border">
+            <option value="@deviceList.First().Id">@deviceList.First().Name</option>
+        </select>
+    </div>
+    <div class="form-group">
+        @*<input type="text" id="pictureClue" class="form-control" onblur="URLObj.getPicture()" placeholder="Please input the rule to get the picture" />*@
+        <div id="pictureResult"></div>
+        @foreach (Data.DeviceType device in deviceList)
+        {
+            string className = "";
+            if (device.Id != deviceList.First().Id)
+            {
+                className = "sr-only";
+            }
+            <input type="file" id="file_@device.Id" class="form-control adv-file @className" accept="image/*">
+        }
+    </div>
+    <div class="form-group">
+        @*<input type="text" id="titleClue" class="form-control" onblur="URLObj.getTitle()" placeholder="Please input the rule to get the title" />*@
+        @foreach (Data.DeviceType device in deviceList)
+        {
+            string className = "";
+            if (device.Id != deviceList.First().Id)
+            {
+                className = "sr-only";
+            }
+            <textarea rows="5" id="title_@device.Id" class="form-control adv-title-field @className" placeholder="Title (? characters)"></textarea>
+        }
+
+    </div>
+    <div class="form-group">
+        @*<input type="text" id="priceClue" class="form-control" onblur="URLObj.getPrice()" placeholder="Please input the rule to get the price" />*@
+        <input type="number" class="form-control adv-price" placeholder="Price (optional)" />
+        @{
+            Service.ADV.Currency currencyObject = new Service.ADV.Currency();
+            IEnumerable<SelectListItem> currencyList = from u in currencyObject.GetList()
+                                                       select new SelectListItem
+                                                       {
+                                                           Value = u.Id.ToString(),
+                                                           Text = u.Code
+                                                       };
+
+            currencyList = currencyList.OrderBy(m => m.Text);
+        }
+        @Html.DropDownList("lstCurrency", currencyList, new { @class = "select-no-border price-currency" })
+    </div>
+    <div class="form-group">
+        <label class="control-label label-2-columns">
+            Display Currency
+            <a href="javascript:URLObj.addCurrency()" class="pull-right">Add more</a>
+        </label>
+        @{
+            currencyList = currencyList.Concat(new[]{new SelectListItem
+                {
+                    Value = "0",
+                    Text = "Any",
+                    Selected=true
+                }});
+
+            currencyList = currencyList.OrderBy(m => m.Text);
+        }
+        @Html.DropDownList("lstDisplayCurrency", currencyList, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label label-2-columns">
+            Display Location
+            <a href="javascript:URLObj.addCountry()" class="pull-right">Add more</a>
+        </label>
+        @{
+            Service.Region.CityObj cityObject = new Service.Region.CityObj();
+            IEnumerable<SelectListItem> locationList = from u in cityObject.GetAllCities()
+                                                       select new SelectListItem
+                                                       {
+                                                           Value = u.CityId.ToString(),
+                                                           Text = u.Name + " (" + u.Country.Name + ")"
+                                                       };
+            locationList = locationList.Concat(new[]{new SelectListItem
+        {
+            Value = "0",
+            Text = "Any",
+            Selected=true
+        }});
+            locationList = locationList.OrderBy(m => m.Text);
+        }
+        @Html.DropDownList("lstLocation", locationList, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label label-2-columns">
+            Display Time
+            <a href="javascript:URLObj.addTimeframe()" class="pull-right">Add more</a>
+        </label>
+        @{
+            Service.ADV.Timeframe timeObject = new Service.ADV.Timeframe();
+            IEnumerable<SelectListItem> timeList = from u in timeObject.GetList(0)
+                                                   select new SelectListItem
+                                                   {
+                                                       Value = u.Id.ToString(),
+                                                       Text = u.Name
+                                                   };
+            timeList = timeList.Concat(new[]{new SelectListItem
+        {
+            Value = "0",
+            Text = "Any",
+            Selected=true
+        }});
+            timeList = timeList.OrderBy(m => m.Text);
+        }
+        @Html.DropDownList("lstTimeframe", timeList, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label label-2-columns">
+            Display times per person
+            @*<a href="#" class="pull-right">Add more</a>*@
+        </label>
+        @{
+            List<SelectListItem> timesList = new List<SelectListItem>();
+            string text = string.Empty;
+            for (int i = 0; i < 1000; i++)
+            {
+                if (i == 0)
+                {
+                    text = "Any";
+                }
+                else
+                {
+                    text = i.ToString();
+                }
+                timesList.Add(new SelectListItem
+                {
+                    Text = text,
+                    Value = i.ToString()
+                });
+            }
+        }
+        @Html.DropDownList("lstTimes", timesList, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <input type="button" value="Submit" onclick="URLObj.create()" class="btn btn-primary btn-full" />
+    </div>
+    <div class="form-control-noborder" style="text-align:center">
+        <img src="../images/line.png">
+        or?
+        <img src="../images/line.png">
+    </div>
+    <div class="form-group">
+        <input type="button" value="Dismiss" onclick="URLObj.dismiss()" class="btn btn-primary btn-full" />
+    </div>
+</div>
+<div style="width:59%;display:inline-block;vertical-align:top">
+    <div style="height:10px;"></div>
+    <div class="form-group">
+        <label class="control-label">Ad display in </label>
+        <select id="lstSelectingDevice4Display" class="select-no-border">
+            <option value="@deviceList.First().Id">@deviceList.First().Name</option>
+        </select>
+    </div>
+    <div class="form-group adv-display-area">
+        <label id="displayTitle"></label>
+        <img id="displayImg" />
+        <a id="displayURL" href="@Model.URL">@Model.URL</a>
+        <label id="displayPrice" class="result-message"></label>
+    </div>
+    <div class="sr-only">
+        <h3>
+            <label class="control-label">RSS Schedule</label>
+        </h3>
+        <div>
+            <label class="control-label pull-left">URL for RSS: </label>
+            <input type="text" class="form-control text-box single-line pull-left" style="width: 300px;margin:0 5px;">
+            <input type="button" value="Detect" class="pull-left btn btn-primary">
+        </div>
+        <div style="width: 600px;max-height: 400px;overflow:auto;padding:10px 0;clear: both;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>RSS</th>
+                        <th>Daily Schedule (HH:mm)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control text-box single-line" style="width: 327px;margin:0 5px;">
+                        </td>
+                        <td>
+                            <select>
+                                <option>08</option>
+                                <option>09</option>
+                            </select>
+                            :
+                            <select>
+                                <option>30</option>
+                                <option>31</option>
+                            </select>
+                        </td>
+
+                        <td><input type="button" value="Save" class="btn btn-primary"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control text-box single-line" style="width: 327px;margin:0 5px;">
+                        </td>
+                        <td>
+                            <select>
+                                <option>08</option>
+                                <option>09</option>
+                            </select>
+                            :
+                            <select>
+                                <option>30</option>
+                                <option>31</option>
+                            </select>
+                        </td>
+
+                        <td><input type="button" value="Save" class="btn btn-primary"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control text-box single-line" style="width: 327px;margin:0 5px;">
+                        </td>
+                        <td>
+                            <select>
+                                <option>08</option>
+                                <option>09</option>
+                            </select>
+                            :
+                            <select>
+                                <option>30</option>
+                                <option>31</option>
+                            </select>
+                        </td>
+
+                        <td><input type="button" value="Save" class="btn btn-primary"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @*<div>
+        <h3>
+            <label class="control-label">Detech URLS</label>
+        </h3>
+        <div>
+            <label class="control-label pull-left">Rule for Price: </label>
+            <input type="text" class="form-control text-box single-line pull-left" style="width:150px;margin:0 5px">
+            <label class="control-label pull-left">Picture: </label>
+            <input type="text" class="form-control text-box single-line pull-left" style="width:150px;margin:0 5px">
+            <label class="control-label pull-left">Currency: </label>
+            <select class="form-control" style="width:100px;">
+                <option>USD</option>
+                <option>VND</option>
+            </select>
+        </div>
+        <div style="clear:both;padding:10px 0 10px 0">
+            <label class="control-label pull-left">URL: </label>
+            <input type="text" class="form-control text-box single-line pull-left" style="width:400px;margin:0 5px">
+            <input type="button" value="Detect" class="pull-left btn btn-primary">
+        </div>
+        <div style="width: 600px;max-height: 400px;overflow:auto;padding:10px 0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th>Picture</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control text-box single-line" style="width:300px;margin:0 5px"></td>
+                        <td>
+                            <img src="https://cdn1.tgdd.vn/Products/Images/42/73704/iphone-6s-plus-64gb-bac-180x125-1.png">
+                        </td>
+                        <td>
+                            Điện thoại iPhone 6s Plus 64GB
+                        </td>
+                        <td>100</td>
+                        <td><input type="button" value="Accept" class="btn btn-primary"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>*@
+</div>
+<script>
+    $(".adv-detail-container").css("width", "100%");
+    $(document).ready(function () {
+        URLObj.showDisplay4Device($("#lstSelectingDevice4Display").val());
+    });
+
+    function refreshCurrencyList(list) {
+        URLObj.refreshCurrencyList(list);
+    }
+    function refreshLocationList(list) {
+        URLObj.refreshLocationList(list);
+    }
+    function refreshTimeFrameList(list) {
+        URLObj.refreshTimeFrameList(list);
+    }
+</script>

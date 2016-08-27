@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="952a97bbd21d47578dcfd0cb51bcb6eb" Name="Diagram1">
+        <EntityTypeShape EntityType="dtModel.Campaign" Width="1.5" PointX="1.5" PointY="12.375" />
+        <EntityTypeShape EntityType="dtModel.Category" Width="1.5" PointX="3.75" PointY="12.375" />
+        <EntityTypeShape EntityType="dtModel.City" Width="1.5" PointX="3.75" PointY="6.5" />
+        <EntityTypeShape EntityType="dtModel.Country" Width="1.5" PointX="1.5" PointY="6.5" />
+        <EntityTypeShape EntityType="dtModel.Currency" Width="1.5" PointX="0.75" PointY="3.125" />
+        <EntityTypeShape EntityType="dtModel.Device" Width="1.5" PointX="8.75" PointY="9.25" />
+        <EntityTypeShape EntityType="dtModel.DeviceType" Width="1.5" PointX="6" PointY="8.25" />
+        <EntityTypeShape EntityType="dtModel.DeviceTypeURL" Width="1.5" PointX="8.25" PointY="3" />
+        <EntityTypeShape EntityType="dtModel.NegativeMarch" Width="1.5" PointX="11" PointY="6.125" />
+        <EntityTypeShape EntityType="dtModel.PriceURL" Width="1.5" PointX="3" PointY="3.125" />
+        <EntityTypeShape EntityType="dtModel.Status" Width="1.5" PointX="1.5" PointY="20.75" />
+        <EntityTypeShape EntityType="dtModel.sysdiagram" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dtModel.Task" Width="1.5" PointX="1.5" PointY="9.75" />
+        <EntityTypeShape EntityType="dtModel.TelephoneCode" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dtModel.TimeFrame" Width="1.5" PointX="3.75" PointY="9" />
+        <EntityTypeShape EntityType="dtModel.TransactionHistory" Width="1.5" PointX="3.75" PointY="16.5" />
+        <EntityTypeShape EntityType="dtModel.URL" Width="1.5" PointX="6" PointY="2.25" />
+        <EntityTypeShape EntityType="dtModel.Table_1" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dtModel.View_CategoryList" Width="1.5" PointX="5.75" PointY="10.75" />
+        <EntityTypeShape EntityType="dtModel.View_Cities" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="dtModel.View_URLAllDeviceTypes" Width="1.5" PointX="7.75" PointY="11.75" />
+        <EntityTypeShape EntityType="dtModel.View_Users" Width="1.5" PointX="9.75" PointY="11.75" />
+        <AssociationConnector Association="dtModel.FK_URLs_Categories" />
+        <AssociationConnector Association="dtModel.FK_Cities_Countries" />
+        <AssociationConnector Association="dtModel.FK_URLs_Cities" />
+        <AssociationConnector Association="dtModel.FK_PriceURL_Currencies" />
+        <AssociationConnector Association="dtModel.FK_URLs_Currencies" />
+        <AssociationConnector Association="dtModel.FK_NegativeMarchs_Devices" />
+        <AssociationConnector Association="dtModel.FK_DeviceURL_Devices" />
+        <AssociationConnector Association="dtModel.FK_DeviceTypeURL_URLs" />
+        <AssociationConnector Association="dtModel.FK_TransactionHistory_Tasks" />
+        <AssociationConnector Association="dtModel.FK_URLs_TimeFrames" />
+        <AssociationConnector Association="dtModel.CampaignCategories" />
+        <EntityTypeShape EntityType="dtModel.User" Width="1.5" PointX="3.75" PointY="19.5" />
+        <AssociationConnector Association="dtModel.FK_Campaigns_Users" />
+        <AssociationConnector Association="dtModel.FK_Users_Statuses" />
+        <AssociationConnector Association="dtModel.FK_TransactionHistory_Users" />
+        <EntityTypeShape EntityType="dtModel.Keyword" Width="1.5" PointX="8.25" PointY="0.75" />
+        <AssociationConnector Association="dtModel.FK_Keywords_Keywords" />
+        <AssociationConnector Association="dtModel.FK_Keywords_URLs" />
+        <AssociationConnector Association="dtModel.FK_NegativeMarchs_Keywords" />
+        <EntityTypeShape EntityType="dtModel.Link" Width="1.5" PointX="12.375" PointY="11.75" />
+        <AssociationConnector Association="dtModel.FK_Links_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

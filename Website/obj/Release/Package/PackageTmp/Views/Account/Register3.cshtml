@@ -1,0 +1,97 @@
+﻿@model Admin.Models.RegisterViewModel
+<h2>@Website.App_LocalResources.LanguageLabel.CreateAccount</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form register-form">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-control" style="border: none;background-color: transparent; box-shadow: none;padding-left:0;margin-bottom:44px">
+            <label class="control-label">@Website.App_LocalResources.LanguageLabel.YourPhone</label>
+            @Html.HiddenFor(model => model.CountryCode)
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control phone-number1", maxlength = 11, placeholder = Website.App_LocalResources.LanguageLabel.YourPhonePlaceholder } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", maxlength = 200 } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", maxlength = 50, placeholder = @Website.App_LocalResources.Error.PasswordRule } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+        </div>
+        <div class="form-group result-message" style="width:300px">
+            @Model.Message
+        </div>
+        <div class="form-group">
+            <input type="submit" value="@Website.App_LocalResources.LanguageLabel.CreateYourAccount" onclick="setCountryCode(); return true;" id="btnRegister" class="btn btn-primary btn-full" />
+        </div>
+        <div class="form-group">
+            <p class="register-terms">
+                @Website.App_LocalResources.LanguageLabel.RegisterAgreementPart1
+                @Html.ActionLink(Website.App_LocalResources.LanguageLabel.RegisterAgreementPart2, "terms", "home")
+                @Website.App_LocalResources.LanguageLabel.RegisterAgreementPart3
+                @Html.ActionLink(Website.App_LocalResources.LanguageLabel.RegisterAgreementPart4, "privacy", "home")
+                @Website.App_LocalResources.LanguageLabel.RegisterAgreementPart5.Trim()
+            </p>
+        </div>
+        <hr class="small-hr" />
+        <div class="form-group">
+            <span>@Website.App_LocalResources.LanguageLabel.AlreadyHaveAccount</span>
+            @Html.ActionLink(@Website.App_LocalResources.LanguageLabel.Login, "login")
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        validatePhone();
+       
+        //Hide signin
+        $("#btnLogin").hide();
+        $("#logoContainer").css("padding", "0 0 20px 0");
+    });
+    function validatePhone() {
+        $(document.forms[0]).attr("id", "frmRegister");
+        $('#frmRegister')
+       .find('[name="Phone"]')
+           .intlTelInput({
+               utilsScript: 'http://formvalidation.io//vendor/intl-tel-input/lib/libphonenumber/build/utils.js',
+               autoPlaceholder: true,
+               preferredCountries: ['vn', 'us']
+           });
+
+        $('#frmRegister').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    Phone: {
+                        validators: {
+                            callback: {
+                                message: 'The phone number is not valid',
+                                callback: function (value, validator, $field) {
+                                    return value === '' || $field.intlTelInput('isValidNumber');
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+            // Revalidate the number when changing the country
+            .on('click', '.country-list', function () {
+                $('#frmRegister').formValidation('revalidateField', 'Phone');
+            });
+    }
+</script>

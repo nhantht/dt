@@ -1,0 +1,31 @@
+﻿.search-text {
+    width: 600px;
+    height: 45px;
+    max-width: none;
+    font-size: 1.5em;
+}
+
+.logo-section {
+    text-align: right;
+    vertical-align: central;
+}
+
+.search-section {
+    display:inline-block;
+    padding-top: 18px;
+    text-align: left;
+}
+
+.search-button {
+    height: 45px;
+    width: 45px;
+    border: 8px solid #f90;
+    background: #f90 url('../Images/icons.png') no-repeat;
+    background-position: -169px -63px;
+    overflow: hidden;
+    vertical-align: top;
+    margin-left: -4px;
+}
+.search-content{
+    text-align:center;
+}

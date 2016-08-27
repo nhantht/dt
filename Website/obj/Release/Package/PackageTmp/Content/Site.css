@@ -1,0 +1,272 @@
+﻿body {
+    /*background: -webkit-repeating-linear-gradient(135deg, #666, #666 25%, #5c5c5c 25%, #5c5c5c 50%, #666 50%) top left fixed;
+    background: repeating-linear-gradient(-45deg, #666, #666 25%, #5c5c5c 25%, #5c5c5c 50%, #666 50%) top left fixed;
+    background-size: 30px 30px;*/
+    margin: 0px 0px 0px 0px;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    /*background-color: #f5f5f5;*/
+}
+
+.dt-container-fluid {
+    background-color: white;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    text-align: center;
+    padding: 0 15px 0 15px;
+}
+
+.navbar-inverse {
+    background-color: #f90;
+    border-color: whitesmoke;
+    color: black;
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: black;
+    }
+
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: gray;
+        }
+
+.middle-content {
+    /*width: 300px;*/
+    display: inline-block;
+    /*min-height: 400px;*/
+    text-align: left;
+    border: 1px silver solid;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 0 15px;
+}
+
+.logo-container {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.logo {
+    width: 59px;
+    height: 59px;
+    /*margin-left: 65px;*/
+}
+
+.page-header {
+    border: none;
+    margin: 0;
+    padding: 10px 20px;
+    height: 40px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.company-name {
+    font-size: 5em;
+    color: gray;
+}
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    /*max-width: 280px;*/
+}
+
+.result-message {
+    color: red;
+}
+
+.date {
+    width: 140px;
+}
+
+.displayed-value {
+    font-weight: normal;
+}
+
+select {
+    height: 30px;
+}
+
+.inline-div {
+    display: inline;
+}
+
+.text-danger {
+    color: red;
+}
+
+.form {
+    text-align: left;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.btn-primary {
+    color: black;
+    background-color: #F7DD9D;
+    border-color: #A88734;
+    /*font-weight:bold;*/
+}
+
+    .btn-primary:hover {
+        color: black;
+        background-color: #F1C75D;
+        border-color: #A88734;
+    }
+
+.btn-primary2 {
+    background-color: #428bca;
+    border-color: #357ebd;
+    color: white;
+}
+
+.text-box:focus {
+    border: 2px #FFCC66 solid;
+}
+
+.small-hr {
+    width: 100px;
+}
+
+.form-control-noborder {
+    border: none;
+    background-color: transparent;
+    padding-bottom: 15px;
+}
+
+.btn-default {
+    background-color: whitesmoke;
+}
+
+    .btn-default:hover {
+        background-color: silver;
+    }
+
+.html-content {
+    text-align: justify;
+}
+
+.hidden {
+    display: none;
+}
+
+/*Customization*/
+.validation-summary-errors .text-danger li {
+    width: 230px;
+}
+
+.form-control:focus {
+    border: 2px #FFCC66 solid;
+}
+
+.input-border {
+    border: 2px #FFCC66 solid;
+}
+
+.bs-docs-nav {
+    background-color: whitesmoke;
+}
+
+.bs-docs-nav {
+    margin-top: 20px;
+}
+
+    .bs-docs-nav .navbar-brand, .bs-docs-nav .navbar-nav > li > a {
+        color: gray;
+    }
+
+.navbar-collapse .navbar-nav.navbar-right:last-child {
+    margin-right: 0;
+}
+
+.validation-summary-errors {
+    width: 230px;
+    text-align: justify;
+}
+
+a {
+    color: #4EA0C5;
+}
+
+input::-webkit-input-placeholder {
+    font-size: 9.5px;
+    line-height: 2;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-size: 9.5px;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    font-size: 9.5px;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+    font-size: 9.5px;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    font-size: 9.5px;
+}
+
+.content-form {
+    padding: 0 10px 10px 10px;
+}
+
+.paragraph {
+    width: 100%;
+    text-align: left;
+}
+
+.country-field-group {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    padding-left: 0;
+    margin-bottom: 44px;
+}
+
+.phone-forgotpassword-field {
+    margin: 0;
+    height: 47px;
+}
+
+.form-control {
+    font-size: 13px;
+    color: #333;
+}
+
+.pagination > .active > a {
+    background-color: #f7dd9d;
+    border-color: #a88734;
+    color: #000;
+}
+
+    .pagination > .active > a:hover {
+        background-color: #a88734;
+        border-color: #a88734;
+    }
+
+.mau-da {
+    background-image: url('../Images/Mau da/gach 3.jpg');
+}
+
+.intl-tel-input {
+    width: 100%;
+}

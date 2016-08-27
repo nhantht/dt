@@ -1,0 +1,27 @@
+﻿<div class="container-fluid search-content">
+    <table class="search-section" border="0">
+        <tr>
+            <td colspan="2">
+                <img src="../images/logo.png" class="logo home-logo" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.TextBox("txtSearch", string.Empty, new { maxlength = 200, @class = "search-text form-control", placeholder = string.Empty })
+            </td>
+            <td class="search-button-container">
+                <input type="button" class="search-button" id="btnSearch" value="" tabindex="0" name="go">
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#txtSearch").focus();
+        $("#btnSearch").bind("click", function () {
+            document.location = "/adv/search";
+        });
+        $("#logoContainer").remove();
+        $(".middle-content").removeClass("middle-content");
+    });
+</script>

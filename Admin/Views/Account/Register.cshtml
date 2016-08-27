@@ -1,0 +1,59 @@
+﻿@model Admin.Models.RegisterViewModel
+
+<h2>@Admin.App_LocalResources.LanguageLabel.CreateAccount</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label">@Admin.App_LocalResources.LanguageLabel.YourPhone</label>
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", maxlength = 11 } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", maxlength = 200 } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+        </div>
+        <div class="form-group">
+            @Model.Message
+        </div>
+        <div class="form-group">
+            <input type="submit" value="@Admin.App_LocalResources.LanguageLabel.CreateYourAccount" id="btnRegister" class="btn btn-primary btn-full" />
+        </div>
+        <hr class="small-hr" />
+        <div class="form-group">
+            <label class="control-label">@Admin.App_LocalResources.LanguageLabel.AlreadyHaveAccount</label>
+            @Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.Login,"login")
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        //$("#btnRegister").click(function () {
+        //    if ($("#ckbAgreement").prop("checked") == false) {
+        //        alert("Please input all information and read the conditions and privacy before registering!");
+        //        return false;
+        //    };
+        //    return true;
+        //});
+    });
+</script>

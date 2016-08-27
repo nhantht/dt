@@ -1,0 +1,257 @@
+﻿.adv-detail-container {
+    width: 250px;
+}
+
+.adv-detail-container-left {
+}
+
+.adv-detail-container-right {
+    border-left: 1px #C2C2C2 solid;
+    padding: 0 0 0 15px;
+}
+
+.adv-budget {
+    color: #60A37A;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.adv-center-lable-container {
+    height: 120px;
+    text-align: left;
+    width: 100%;
+    display: table;
+}
+
+.adv-center-lable {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    color: #4EA0C5;
+}
+
+#tabList {
+    margin: 15px 0;
+}
+
+#tabList {
+    margin-top: 50px;
+    position: relative;
+    padding: 0;
+}
+
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    width: 200px;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: white; /*To make it looks like on example pic, it is possible do do with it whatever you want*/
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-width: 1px 1px 0;
+    border-radius: 5px 5px 0 0; /*To affect only top corners*/
+    color: silver !important;
+    position: relative;
+    z-index: 5;
+    text-decoration: none !important; /*To overwrite jquery-ui.css*/
+}
+
+.ui-tabs-nav {
+    height: 30px; /*To stop nav block scaling of tab size*/
+}
+#divADV .ui-widget-content{
+    border:none;
+}
+.ui-tabs .ui-tabs-nav {
+    margin: 0;
+    padding: 0.2em 0.2em 0;
+    border: none;
+    background: none;
+    border-radius: 2px 2px 0 0; /*To affect only top corners*/
+}
+
+    .ui-tabs .ui-tabs-nav li {
+        position: relative; /*To overwrite jquery-ui.css*/
+        top: -10px !important; /*To overwrite jquery-ui.css*/
+        border: none;
+        margin: 0 0 -5px 0;
+        background: none;
+    }
+
+.ui-tabs-anchor {
+    color: white !important; /*To overwrite jquery-ui.css*/
+    text-decoration: underline !important; /*To overwrite jquery-ui.css*/
+}
+
+#tabList ul.ui-widget-header, #tabList ul.ui-widget-content, #tabList ul.ui-state-default, #tabList ul.ui-state-hover {
+    background: none;
+    border: none;
+}
+
+#tabList .ui-tabs-active a {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: white; /*To make it looks like on example pic, it is possible do do with it whatever you want*/
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-width: 1px 1px 0;
+    border-radius: 5px 5px 0 0; /*To affect only top corners*/
+    color: #222222;
+    position: relative;
+    z-index: 5;
+    color: black !important; /*To overwrite jquery-ui.css*/
+    text-decoration: none !important; /*To overwrite jquery-ui.css*/
+}
+
+#tabList .ui-tabs-active .adv-plus-icon {
+    background-image: url(../../Images/plus-outline_active.png);
+}
+
+.adv-plus-icon {
+    display: inline-block;
+    background-image: url(../../Images/plus-outline.png);
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 7px;
+    left: -34px;
+    z-index: 10;
+}
+
+#tabList a:focus { /*To handle that annoing border(chrome) when item is in focus*/
+    outline: none;
+}
+
+#divADV th, #divADV td:first-child {
+    border-left: 1px solid #dddddd;
+}
+
+#divADV tr:last-child {
+    border-bottom: 1px solid #dddddd;
+}
+
+#divADV th {
+    border-top: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    background: whitesmoke;
+}
+
+#divADV td {
+    border-top: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+}
+
+#divADV .ui-widget-content a {
+    color: #4EA0C5 !important;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+
+#divADV .select-no-border {
+    border: none;
+}
+
+.price-currency {
+    position: relative;
+    left: -1px;
+    top: -32px;
+    float: right;
+}
+
+.adv-price {
+}
+
+.label-2-columns {
+    width: 100%;
+}
+
+.adv-display-area {
+    width: 80%;
+    height: 500px;
+    border: 1px silver solid;
+    padding: 10px;
+}
+
+.url-label {
+    width: 100%;
+}
+
+.nagetive-march {
+    text-decoration: none;
+    color: black;
+    margin-right: 5px;
+}
+
+    .nagetive-march:hover {
+        text-decoration: none;
+        color: #4EA0C5;
+    }
+
+.nagetive-march-icon {
+    color: red;
+}
+
+.nagetive-march-right-arrow-icon {
+    float: right;
+    position: relative;
+    top: -28px;
+    margin-right: 5px;
+}
+
+#displayImg {
+    width: 200px;
+}
+
+#displayTitle {
+    width: 200px;
+    display: block;
+    color: #626388;
+}
+
+#displayURL {
+    color: #3D6D48;
+    text-decoration: none;
+    display: block;
+}
+
+#displayPrice {
+    color: #D6C4AA;
+    display: block;
+}
+
+.price-currency {
+    color: #B2A18F;
+}
+
+.adv-device {
+    color: #626388;
+}
+
+.ui-tabs-panel {
+    border-top: silver 1px solid !important;
+    margin: -15px !important;
+    margin-top: -4px !important;
+}

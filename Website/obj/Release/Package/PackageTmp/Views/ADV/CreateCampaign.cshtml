@@ -1,0 +1,42 @@
+﻿@model Website.Models.EditCampaignViewModels
+<div class="form" style="width: 300px;display: table-cell;">
+    <div class="validation-summary-valid text-danger" data-valmsg-summary="true" id="messagePanel">
+        <ul>
+            <li style="display:none"></li>
+        </ul>
+    </div>
+    <input data-val="true" data-val-number="The field Code must be a number." data-val-required="The Code field is required." id="Id" name="Id" type="hidden" value="0">
+    <div class="form-group">
+        <label class="control-label" for="Name">Campaign name</label>
+        <input class="form-control text-box single-line" data-val="true" data-val-required="You must name the campaign" id="Name" maxlength="200" name="Name" type="text" value="">
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="Budget">Budget</label>
+        <input class="form-control text-box single-line" data-val="true" data-val-number="The field Budget must be a number." data-val-regex="Budget is invalid. Budget must be a numberic and use a full stop (.) for decimals." data-val-regex-pattern="[0-9]*\.?[0-9]+" data-val-required="You must name the budget" id="Budget" maxlength="18" name="Budget" type="text" value="0.00">
+    </div>
+    <div class="form-group">
+        <label class="control-label" style="position:relative;top:-29px">Status</label>
+        <div style="display:inline-block">
+            <div>
+
+                <input type="radio" id="status" name="status" value="On">
+                <label class="control-label" style="color:green">On</label>
+            </div>
+            <div>
+                <input type="radio" id="status" name="status" value="Off" checked="">
+                <label class="control-label" style="color:red">Off</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="button" value="Create new campaign" onclick="Campaign.create()" class="btn btn-primary btn-full">
+    </div>
+    <div class="form-control-noborder" style="text-align:center">
+        <img src="../images/line.png">
+        or?
+        <img src="../images/line.png">
+    </div>
+    <div class="form-group">
+        <input type="button" value="Dismiss" onclick="ADV.dismiss()" class="btn btn-primary btn-full">
+    </div>
+</div>

@@ -1,0 +1,118 @@
+﻿@model Admin.Models.UpdateAccountViewModel
+@{
+    ViewBag.Title = "Update";
+    IEnumerable<SelectListItem> countries = ViewBag.Countries as IEnumerable<SelectListItem>;
+}
+
+<h2>Update Your Profile</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Phone)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label" }):
+            <label class="control-label displayed-value">
+                @Model.City - @Model.Country
+            </label>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label" })
+            @Html.CheckBoxFor(m => m.IsActive, new { id = "ckbActive" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Logined, htmlAttributes: new { @class = "control-label" })
+            @Html.CheckBoxFor(m => m.Logined, new { id = "ckbLogined" })
+        </div>
+        <div id="divActiveDates">
+            <div class="form-group">
+                <span class="control-label">From Date</span>
+                @Html.HiddenFor(mbox => mbox.InActiveFrom, new { id = "fromDate2" })
+                <div class='input-group date' id='fromDate1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="control-label">To Date</span>
+                @Html.HiddenFor(mbox => mbox.InActiveTo, new { id = "toDate2" })
+                <div class='input-group date' id='toDate1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.StatusName, htmlAttributes: new { @class = "control-label" }):
+            <label class="control-label displayed-value">
+                @Model.StatusName
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 result-message">
+            @Model.Message
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary btn-full" />
+    </div>
+    <div class="form-group">
+        <input type="button" value="Back" onclick="document.location='../index'" class="btn btn-default btn-full" />
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        $('#fromDate2').val('@ViewBag.FromDate');
+        $('#toDate2').val('@ViewBag.ToDate');
+
+        $('#fromDate1').datetimepicker({
+            format: 'L',
+            locale: 'vi',
+            defaultDate: '@ViewBag.FromDate'
+        });
+        $('#toDate1').datetimepicker({
+            format: 'L',
+            locale: 'vi',
+            defaultDate: '@ViewBag.ToDate'
+        });
+        //Init
+        if ("@Model.IsActive" == "True") {
+            $("#divActiveDates").hide();
+        } else {
+            $("#divActiveDates").show();
+        }
+        //Events
+        $("#fromDate1").on("dp.change", function (e) {
+            //$('#datDenNgay').data("DateTimePicker").minDate(e.date);
+            Util.Convert.setSystemDate(e.date, "fromDate2");
+        });
+        $("#toDate1").on("dp.change", function (e) {
+            //    $('#datTuNgay').data("DateTimePicker").maxDate(e.date);
+            Util.Convert.setSystemDate(e.date, "toDate2");
+        });
+
+        $("#ckbActive").click(function () {
+            if ($("#ckbActive").prop("checked")) {
+                $("#divActiveDates").hide();
+            } else {
+                $("#divActiveDates").show();
+            }
+        });
+    });
+</script>

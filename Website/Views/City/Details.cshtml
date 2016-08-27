@@ -1,0 +1,35 @@
+﻿@model Admin.Models.CityDetailViewModel
+<h2>City Details</h2>
+<div>
+    <dl class="dl-horizontal">
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryName)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CityId }) |
+    @Html.ActionLink("Back to List", "Back2List", new { countryId = Model.CountryId })
+</p>
+<style>
+    .dl-horizontal dt{
+        width:auto;
+    }
+    .dl-horizontal dd{
+        margin-left:120px;
+    }
+</style>

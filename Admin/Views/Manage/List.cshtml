@@ -1,0 +1,106 @@
+﻿@model PagedList.IPagedList<Admin.Models.AccoutListViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "List";
+    IEnumerable<SelectListItem> statuses = ViewBag.Statuses as IEnumerable<SelectListItem>;
+}
+
+<h2>Account List</h2>
+<h4>Search</h4>
+<table>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.FirstOrDefault().Email): </td>
+        <td>@Html.TextBox("txtEmail", null, new { maxlength = 200, width = "200px" })</td>
+        <td>@Html.DisplayNameFor(m => m.FirstOrDefault().Fullname): </td>
+        <td>@Html.TextBox("txtFullname", null, new { maxlength = 200, width = "200px" })</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.FirstOrDefault().Status): </td>
+        <td>@Html.DropDownListFor(m => m.FirstOrDefault().StatusId, statuses, new { id = "lstStatus", style="width:174px" })</td>
+        <td>@Html.DisplayNameFor(m => m.FirstOrDefault().IsActive): </td>
+        <td>
+            @Html.CheckBox("ckbActive", true, new { maxlength = 200, width = "200px" })
+            <input type="button" id="btnSearch" value="Search" class="btn btn-primary" />
+        </td>
+    </tr>
+</table>
+<hr />
+<p>
+    @Html.ActionLink("Create New", "register", "account")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Phone", "List", new { sortOrder = ViewBag.FullnameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Email", "List", new { sortOrder = ViewBag.EmailSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Created Date", "List", new { sortOrder = ViewBag.CreatedDateSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Points", "List", new { sortOrder = ViewBag.PointSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Active?", "List", new { sortOrder = ViewBag.ActiveSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Status", "List", new { sortOrder = ViewBag.StatusSortParm })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Points)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "index", new { id = item.Phone })
+                @if (item.Phone != "999999")
+                {
+                    <div class="inline-div"> | @Html.ActionLink("Delete", "index", new { id = item.Phone, task = "DELETE" })</div>
+                }
+            </td>
+        </tr>
+    }
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("list",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+<script>
+    $(document).ready(function () {
+        //Set filters
+        if("@ViewBag.IsActive".toLowerCase()=="false"){
+            $("#ckbActive").prop("checked",false);
+        }else{
+            $("#ckbActive").prop("checked",true);
+        }
+        $("#txtEmail").val("@ViewBag.Email");
+        $("#txtFullname").val("@ViewBag.Fullname");
+        //Events
+        $("#btnSearch").click(function () {
+            var filterString = escape($("#txtEmail").val() + "###" + $("#txtFullname").val() + "###" + $("#lstStatus").val() + "###" + $("#ckbActive").prop("checked"));
+            document.location = "list?sortOrder=@ViewBag.CurrentSort" + "&currentFilter=" + filterString + "&page=1";
+        });
+    });
+</script>

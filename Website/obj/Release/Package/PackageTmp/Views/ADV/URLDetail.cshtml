@@ -1,0 +1,267 @@
+﻿@model Website.Models.EditURLViewModels
+<div class="row">
+    <div class="col-md-4">
+        <div class="form">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "messagePanel" })
+            @Html.HiddenFor(model => model.Id)
+            <div class="form-group">
+                <div>
+                    <label class="control-label">Paste or type URL</label>
+                    <label class="pull-right" id="urlStatus" style="color:red"></label>
+                </div>
+                @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @class = "form-control", maxlength = 1000, onblur = "URLObj.getURLContent(this)" } })
+                @*<input type="button" value="Auto Detect" on*@
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Budget, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Budget, new { htmlAttributes = new { @class = "form-control", maxlength = 18} })
+        </div>
+        <div class="form-group">
+            <label class="control-label" style="position:relative;top:-29px">Status</label>
+            <div style="display:inline-block">
+                <div>
+                    @{
+                        string statusOn = Model.Status ? "checked" : string.Empty;
+                        string statusOff = !Model.Status ? "checked" : string.Empty;
+                    }
+                    <input type="radio" id="status" name="status" value="On" @statusOn />
+                    <label class="control-label" style="color:green">On</label>
+                </div>
+                <div>
+                    <input type="radio" id="status" name="status" value="Off" @statusOff />
+                    <label class="control-label" style="color:red">Off</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" style="position:relative;top:-57px">Device</label>
+            <div style="display:inline-block">
+                @{
+                    string checkedString = "";
+                    foreach (Service.ADV.DeviceTypeInput deviceType in Model.Devices)
+                    {
+                        checkedString = deviceType.ExistedDeviceTypeId != null ? "checked" : string.Empty;
+                        <div>
+                            <input type="checkbox" @checkedString id="device_@deviceType.DeviceTypeId" onclick="URLObj.addDevice(this, @deviceType.DeviceTypeId, '@deviceType.ExistedTitle')" name="device_@deviceType.DeviceTypeId" value="@deviceType.DeviceTypeId" />
+                            <label class="control-label">@deviceType.ExistedTitle</label>
+                        </div>
+                        if (checkedString.Length > 0)
+                        {
+                            checkedString = string.Empty;
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Customize Ad in </label>
+            <select id="lstSelectingDevice" class="adv-device select-no-border">
+                @foreach (Service.ADV.DeviceTypeInput deviceType in Model.Devices)
+                {
+                    <option value="@deviceType.DeviceTypeId">@deviceType.ExistedTitle</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            @*<input type="text" id="pictureClue" class="form-control" onblur="URLObj.getPicture()" placeholder="Please input the rule to get the picture" />*@
+            <div id="pictureResult"></div>
+            @foreach (Service.ADV.DeviceTypeInput deviceType in Model.Devices)
+            {
+                string className = "";
+                if (deviceType != Model.Devices.First())
+                {
+                    className = "sr-only";
+                }
+                <input type="file" id="file_@deviceType.DeviceTypeId" class="form-control adv-file @className" value="uploads/@deviceType.Picture" accept="image/*">
+            }
+        </div>
+        <div class="form-group">
+            @*<input type="text" id="titleClue" class="form-control" onblur="URLObj.getTitle()" placeholder="Please input the rule to get the title" />*@
+            @foreach (Service.ADV.DeviceTypeInput deviceType in Model.Devices)
+            {
+                string className = "";
+                if (deviceType != Model.Devices.First())
+                {
+                    className = "sr-only";
+                }
+                <textarea rows="5" id="title_@deviceType.DeviceTypeId" class="form-control adv-title-field @className" placeholder="Title (? characters)">@deviceType.Title</textarea>
+            }
+
+        </div>
+        <div class="form-group">
+
+            @foreach (Service.ADV.PriceInput price in Model.Prices)
+            {
+                if (price.ExistedCurrencyId != null) { 
+                    <script>
+                        URLObj.settings.prices["@price.CurrencyId"] = @price.Price;
+                    </script>
+                }
+            }
+            @*<input type="text" id="priceClue" class="form-control" onblur="URLObj.getPrice()" placeholder="Please input the rule to get the price" />*@
+            <input type="number" class="form-control adv-price" placeholder="Price (optional)" />
+            @{
+                Service.ADV.Currency currencyObject = new Service.ADV.Currency();
+                IEnumerable<SelectListItem> currencyList = from u in currencyObject.GetList()
+                                                           select new SelectListItem
+                                                           {
+                                                               Value = u.Id.ToString(),
+                                                               Text = u.Code
+                                                           };
+
+                currencyList = currencyList.OrderBy(m => m.Text);
+            }
+            @Html.DropDownList("lstCurrency", currencyList, new { @class = "select-no-border price-currency" })
+            <script>$(".adv-price").val(URLObj.settings.prices[$("#lstCurrency").val()])</script>
+        </div>
+        <div class="form-group">
+            <label class="control-label label-2-columns">
+                Display Currency
+                <a href="javascript:URLObj.addCurrency()" class="pull-right">Add more</a>
+            </label>
+            @{
+                currencyList = currencyList.Concat(new[]{new SelectListItem
+                {
+                    Value = "0",
+                    Text = "Any",
+                    Selected=true
+                }});
+
+                currencyList = currencyList.OrderBy(m => m.Text);
+            }
+            @Html.DropDownList("lstDisplayCurrency", currencyList, new { @class = "form-control" })
+            <script>$("#lstDisplayCurrency").val(@Model.DisplayCurrencyId);</script>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label label-2-columns">
+                Display Location
+                <a href="javascript:URLObj.addCountry()" class="pull-right">Add more</a>
+            </label>
+            @{
+                Service.Region.CityObj cityObject = new Service.Region.CityObj();
+                IEnumerable<SelectListItem> locationList = from u in cityObject.GetAllCities()
+                                                           select new SelectListItem
+                                                           {
+                                                               Value = u.CityId.ToString(),
+                                                               Text = u.Name + " (" + u.Country.Name + ")"
+                                                           };
+                locationList = locationList.Concat(new[]{new SelectListItem
+        {
+            Value = "0",
+            Text = "Any",
+            Selected=true
+        }});
+                locationList = locationList.OrderBy(m => m.Text);
+            }
+            @Html.DropDownList("lstLocation", locationList, new { @class = "form-control" })
+            <script>$("#lstLocation").val(@Model.DisplayLocationId);</script>
+        </div>
+        <div class="form-group">
+            <label class="control-label label-2-columns">
+                Display Time
+                <a href="javascript:URLObj.addTimeframe()" class="pull-right">Add more</a>
+            </label>
+            @{
+                Service.ADV.Timeframe timeObject = new Service.ADV.Timeframe();
+                IEnumerable<SelectListItem> timeList = from u in timeObject.GetList(0)
+                                                       select new SelectListItem
+                                                       {
+                                                           Value = u.Id.ToString(),
+                                                           Text = u.Name
+                                                       };
+                timeList = timeList.Concat(new[]{new SelectListItem
+        {
+            Value = "0",
+            Text = "Any",
+            Selected=true
+        }});
+                timeList = timeList.OrderBy(m => m.Text);
+            }
+            @Html.DropDownList("lstTimeframe", timeList, new { @class = "form-control" })
+            <script>$("#lstTimeframe").val(@Model.DisplayTimeframeId);</script>
+        </div>
+        <div class="form-group">
+            <label class="control-label label-2-columns">
+                Display times per person
+                <a href="#" class="pull-right sr-only">Add more</a>
+            </label>
+            @{
+                List<SelectListItem> timesList = new List<SelectListItem>();
+                string text = string.Empty;
+                for (int i = 0; i < 1000; i++)
+                {
+                    if (i == 0)
+                    {
+                        text = "Any";
+                    }
+                    else
+                    {
+                        text = i.ToString();
+                    }
+                    timesList.Add(new SelectListItem
+                    {
+                        Text = text,
+                        Value = i.ToString()
+                    });
+                }
+            }
+            @Html.DropDownList("lstTimes", timesList, new { @class = "form-control" })
+            <script>$("#lstTimes").val(@Model.DisplayTimes);</script>
+        </div>
+
+        <div class="form-group">
+            <input type="button" value="Submit" onclick="URLObj.update()" class="btn btn-primary btn-full" />
+        </div>
+        <div class="form-control-noborder" style="text-align:center">
+            <img src="../images/line.png">
+            or?
+            <img src="../images/line.png">
+        </div>
+        <div class="form-group">
+            <input type="button" value="Dismiss" onclick="URLObj.dismiss()" class="btn btn-primary btn-full" />
+        </div>
+        <div class="form-control-noborder" style="text-align:center">
+            <img src="../images/line.png">
+            or?
+            <img src="../images/line.png">
+        </div>
+        <div class="form-group">
+            <input type="button" value="Delete" onclick="URLObj.destroy(@Model.Id)" class="btn btn-primary btn-full" />
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div style="height:10px;"></div>
+        <div class="form-group">
+            <label class="control-label">Ad display in </label>
+            <select id="lstSelectingDevice4Display" class="adv-device select-no-border">
+                @foreach (Service.ADV.DeviceTypeInput deviceType in Model.Devices)
+                {
+                    <option value="@deviceType.DeviceTypeId">@deviceType.ExistedTitle</option>
+                }
+            </select>
+        </div>
+        <div class="form-group adv-display-area">
+            <label id="displayTitle"></label>
+            <img id="displayImg" />
+            <a id="displayURL" href="@Model.URL">@Model.URL</a>
+            <label id="displayPrice" class="result-message"></label>
+        </div>
+    </div>
+</div>
+<script>
+    $(".adv-detail-container").css("width", "100%");
+    $(document).ready(function(){
+        URLObj.showDisplay4Device($("#lstSelectingDevice4Display").val());
+    });
+    function refreshCurrencyList(list){
+        URLObj.refreshCurrencyList(list);
+    }
+    function refreshLocationList(list){
+        URLObj.refreshLocationList(list);
+    }
+    function refreshTimeFrameList(list){
+        URLObj.refreshTimeFrameList(list);
+    }
+</script>

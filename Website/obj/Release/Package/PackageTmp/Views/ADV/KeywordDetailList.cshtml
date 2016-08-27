@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Website.Models.DetailKeywordListViewModels>
+
+<table class="table">
+    <tr>
+        <th class="text-center">
+            Order
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DisplayPageOrder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SearchQuery)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DisplayTime)
+        </th>
+        <th class="text-right">
+            Cost/Bid
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.ClickAction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SearchLocation)
+        </th>
+    </tr>
+
+    @{
+        int i = 0;
+    }
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td class="text-center">
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayPageOrder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SearchQuery)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayTime)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Cost)/@Html.DisplayFor(modelItem => item.Bid)
+            </td>
+            <td class="text-center">
+                <div>
+                    @{
+                        string status = item.ClickAction ? "On" : "Off";
+                        string color = !item.ClickAction ? "green" : "red";
+                    }
+                    <label class="control-label" style="color:@color">@status</label>
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SearchLocation)
+            </td>
+        </tr>
+    }
+</table>

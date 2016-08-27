@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<Website.Models.KeywordListViewModels>
+@using PagedList.Mvc;
+@if (@Model.PageCount == 0 && Model.Count == 0)
+{
+    <script>
+        $("#noObject").html("You don't have any keyword yet. <a href='javascript:Keyword.showCreation();'>add one now</a>");
+        $("#noObject").show();
+    </script>
+}
+else
+{
+    <script>
+        $("#noObject").html("");
+        $("#noObject").hide();
+    </script>
+}
+<table class="table">
+    <tr>
+        <th class="text-center">
+            Order
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Keyword)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Budget)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Status)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DisplayTimes)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CTR)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AverageCPD)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Marching)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Bid)
+        </th>
+    </tr>
+    @{
+        int i = 0;
+    }
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td class="text-center">
+                @i
+            </td>
+            <td>
+                <a href="javascript:Keyword.showDetail(@item.Id, '@item.Keyword', false)">@Html.DisplayFor(modelItem => item.Keyword)</a>
+                <a href="javascript:Keyword.showDetail(@item.Id, '@item.Keyword', true)" class="pull-right">
+                    <img src="~/Images/edit.png" style="width:15px" />
+                </a>
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+            <td class="text-center">
+                @if (item.Status)
+                {
+                    <label style="color:green">On</label>
+                }
+                else
+                {
+                    <label style="color:red">Off</label>
+                }
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.DisplayTimes)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.CTR)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.AverageCPD)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td class="text-left">
+                @Html.DisplayFor(modelItem => item.Marching)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Bid)
+            </td>
+        </tr>
+    }
+</table>
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+
+@Html.PagedListPager(Model, page => "javascript:Keyword.loadList(" + page + ")")
+@*URLObj.Action("Categorylist",new { page})*@
+<script>
+    $(document).ready(function(){
+        Keyword.settings.page = @Model.PageNumber;
+    });
+</script>

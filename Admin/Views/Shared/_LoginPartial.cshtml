@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "form" }))
+    {
+        @Html.AntiForgeryToken()
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav pull-right">
+                <li>
+                    @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.Hello + " " + Request.Cookies[Lib.Common.Variables.LoginCookie].Value + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                @if (User.Identity.Name == "999999")
+                {
+                    <li>@Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.AccountList, "List", "manage", routeValues: null, htmlAttributes: new { id = "accountListLink" })</li>
+                    <li class="dropdown open">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Link<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.Register, "register", "URL", routeValues: null, htmlAttributes: new { id = "lnkRegisterURL" })</li>
+                            <li>@Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.Search, "index", "URL", routeValues: null, htmlAttributes: new { id = "lnkManageURL" })</li>
+                            <li>@Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.InvalidLink, "InvalidLink", "URL", routeValues: null, htmlAttributes: new { id = "lnkInvalidLink" })</li>
+                        </ul>
+                    </li>
+                }
+                <li class="dropdown open">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">@Admin.App_LocalResources.LanguageLabel.Advertisement<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        @if (User.Identity.Name == "999999")
+                        {
+                            <li>@Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.Config, "config", "ADV", routeValues: null, htmlAttributes: new { id = "lnkAdvConfig" })</li>
+                        }
+                        <li>@Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.Campaign, "campaign", "ADV", routeValues: null, htmlAttributes: new { id = "lnkAdvCampaign" })</li>
+                        <li>@Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.Register, "register", "ADV", routeValues: null, htmlAttributes: new { id = "lnkRegisterAdv" })</li>
+                        <li>@Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.Search, "index", "ADV", routeValues: null, htmlAttributes: new { id = "lnkAdvSearch" })</li>
+                    </ul>
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">@Admin.App_LocalResources.LanguageLabel.Logoff</a></li>
+            </ul>
+        </div>
+    </nav>
+        
+    }
+}
+else
+{
+    <div class="page-header">
+        <input type="button" class="btn btn-primary btn-primary2 pull-right" id="btnLogin" value="@Admin.App_LocalResources.LanguageLabel.Login" onclick="document.location='../account/login'" />
+    </div>
+}

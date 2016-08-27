@@ -1,0 +1,4 @@
+D:\Project\DT\Website\DT\Service\bin\Debug\Service.dll
+D:\Project\DT\Website\DT\Service\bin\Debug\Service.pdb
+D:\Project\DT\Website\DT\Service\obj\Debug\Service.dll
+D:\Project\DT\Website\DT\Service\obj\Debug\Service.pdb

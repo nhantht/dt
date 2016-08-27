@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Admin.Models.CityDetailViewModel>
+@{
+    decimal countryId = decimal.Parse(ViewBag.CountryId.ToString());
+}
+<h2>City List</h2>
+<p>
+    @Html.ActionLink("Create New", "Create", new { countryId = countryId, fromChild = ViewBag.FromChild })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CityId, fromChild = ViewBag.FromChild }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CityId, fromChild = ViewBag.FromChild }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CityId, fromChild = ViewBag.FromChild })
+            </td>
+        </tr>
+    }
+</table>
+<div class="form-group">
+    <div class="col-md-12">
+        @Html.ActionLink("Back to Countries", "Index", "Country", new { fromChild = ViewBag.FromChild }, new { @class = "btn btn-primary btn-full" })
+    </div>
+</div>
+@if (ViewBag.FromChild && Model.Count() > 0)
+{
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="button" value="Synchronize" onclick="refreshLocationList()" class="btn btn-primary btn-full" />
+        </div>
+    </div>
+    <script>
+        function refreshLocationList() {
+            @{
+    Service.Region.CityObj cityObject = new Service.Region.CityObj();
+                IEnumerable<SelectListItem> locationList = from u in cityObject.GetAllCities()
+                select new SelectListItem
+                {
+                    Value = u.CityId.ToString(),
+                    Text = u.Name + " (" + u.Country.Name + ")"
+                };
+            }
+            window.opener.refreshLocationList("@Newtonsoft.Json.JsonConvert.SerializeObject(locationList)");
+        }
+    </script>
+}

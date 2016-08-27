@@ -1,0 +1,66 @@
+﻿@using Admin.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = Website.App_LocalResources.LanguageLabel.Login;
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form register-form">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-control" style="border: none;background-color: transparent; box-shadow: none;padding-left:0;padding-right:0;margin-bottom:44px">
+            <label class="control-label">@Website.App_LocalResources.LanguageLabel.YourPhone</label>
+            @Html.HiddenFor(model => model.CountryCode)
+            @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", maxlength = 15, placeholder = Website.App_LocalResources.LanguageLabel.YourPhonePlaceholder } })
+            <script>
+                $("#Phone").intlTelInput({ nationalMode: false });
+            </script>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            @Html.ActionLink(@Website.App_LocalResources.LanguageLabel.ForgotPassword, "ForgotPassword", "manage", null, new { @class = "pull-right" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <input type="submit" value="@Website.App_LocalResources.LanguageLabel.Login" onclick="User.setCountryCode(); return true;" class="btn btn-primary btn-full" />
+        </div>
+        <div class="form-control-noborder" style="text-align:center">
+            <img src="../images/line.png" />
+            @Website.App_LocalResources.LanguageLabel.NewToWebsite
+            <img src="../images/line.png" />
+        </div>
+        <div class="form-group">
+            <input type="button" onclick="document.location='register'" value="@Website.App_LocalResources.LanguageLabel.CreateYourAccount" id="btnRegister" class="btn btn-default btn-full" />
+        </div>
+        <div class="form-group sr-only">
+            <p style="width:280px">
+                @Website.App_LocalResources.LanguageLabel.SigninAgreementPart1
+                @Html.ActionLink(Website.App_LocalResources.LanguageLabel.SigninAgreementPart2, "terms", "home")
+                @Website.App_LocalResources.LanguageLabel.SigninAgreementPart3
+                @Html.ActionLink(Website.App_LocalResources.LanguageLabel.SigninAgreementPart4, "privacy", "home")
+                @Website.App_LocalResources.LanguageLabel.SigninAgreementPart5.Trim().
+            </p>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        User.detectCountryCode();
+    });
+    function showPass() {
+        $("#passGroup").toggleClass("hidden");
+        if ($("#passGroup").hasClass("hidden")) {
+            $("#Password").unbind("change");
+        } else {
+            $("#lblPassword").text($("#Password").val());
+            $("#Password").keyup(function () {
+                $("#lblPassword").text($("#Password").val());
+            });
+        }
+    }
+</script>

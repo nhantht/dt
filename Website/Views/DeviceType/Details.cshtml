@@ -1,0 +1,26 @@
+﻿@model Admin.Models.DeviceTypeDetailViewModel
+<h2>DeviceType Details</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<style>
+    .dl-horizontal dt{
+        width:auto;
+    }
+    .dl-horizontal dd{
+        margin-left:80px;
+    }
+</style>

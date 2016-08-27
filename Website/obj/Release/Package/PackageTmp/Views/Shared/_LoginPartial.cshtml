@@ -1,0 +1,150 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    string countryCode = "VN";
+    string countryName = "Vietname";
+    string telephoneCode = "+84";
+
+    if (Request.IsAuthenticated)
+    {
+        Service.User.Manage manage = new Service.User.Manage();
+        Data.User user = manage.GetUserInfo(User.Identity.Name);
+        countryCode = user.CountryCode;
+        //Data.Country country = manage.GetUserInfo(User.Identity.Name).Country;
+        //countryCode = country.Code.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[1];
+        //countryName = country.Name;
+        //telephoneCode = country.TelephoneCode;
+        ////Clean
+        //country = null;
+        //manage = null;
+    }
+}
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="pull-right" style="padding-top:10px">
+                    <div style="padding-right:63px;cursor:pointer">
+                        <span id="controlList" style="display:inline;top:8px;"></span>
+                        <span onclick="$('#menu').toggle();">@User.Identity.Name</span>
+                        <span class="caret"></span>
+                        <script>
+                            $("#controlList").intlTelInput({
+                                allowDropdown: false
+                                , nationalMode: true
+                                , geoIpLookup: function (callback) {
+                                    $.get("http://ipinfo.io", function () { }, "jsonp").always(function (resp) {
+                                        var countryCode = (resp && resp.country) ? resp.country : "";
+                                        callback(countryCode);
+                                    });
+                                }
+                            });
+                            $("#controlList").intlTelInput("setCountry", "@countryCode");
+                        </script>
+                        <style>
+                            .intl-tel-input {
+                                display: inline;
+                                top: 8px;
+                            }
+                        </style>
+                    </div>
+                    <div style="position:absolute;right:18px;top:36px">
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Account Management", "List", "manage", routeValues: null, htmlAttributes: new { id = "accountListLink" })</li>
+                            <li>
+                            <li>
+                                @Html.ActionLink("Base Data", "List", "manage", routeValues: null, htmlAttributes: new { id = "accountListLink" })
+                                <span class="caret"></span>
+                                <ul>
+                                    <li>@Html.ActionLink("Currencies", "index", "Currency", routeValues: null, htmlAttributes: new { id = "lnkCurrency" })</li>
+                                    <li>@Html.ActionLink("Device Types", "index", "DeviceType", routeValues: null, htmlAttributes: new { id = "lnkDeviceType" })</li>
+                                    <li>@Html.ActionLink("Devices", "index", "Device", routeValues: null, htmlAttributes: new { id = "lnkDevice" })</li>
+                                    <li>@Html.ActionLink("Time Frames", "index", "TimeFrame", routeValues: null, htmlAttributes: new { id = "lnkTimeFrame" })</li>
+                                    <li>@Html.ActionLink("Countries", "index", "Country", routeValues: null, htmlAttributes: new { id = "lnkCountry" })</li>
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("Index URL", "create", "index", routeValues: null, htmlAttributes: new { id = "indexURLLink" })</li>
+                            <li>@Html.ActionLink("URL Management", "index", "index", routeValues: null, htmlAttributes: new { id = "indexManagementLink" })</li>
+                            <li>@Html.ActionLink(@Website.App_LocalResources.LanguageLabel.Advertising, "index", "adv", null, htmlAttributes: new { id = "lnkADV" })</li>
+                            <li class="ui-state-disabled">@Html.ActionLink("Activity Log", "index", "adv", null, htmlAttributes: new { id = "lnkADV" })</li>
+                            <li class="ui-state-disabled">@Html.ActionLink("Email Alerts", "index", "adv", null, htmlAttributes: new { id = "lnkADV" })</li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Sign out everywhere</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    }
+}
+else
+{
+    <div class="page-header">
+        <input type="button" class="btn btn-primary btn-primary pull-right" id="btnLogin" value="@Website.App_LocalResources.LanguageLabel.Login" onclick="document.location='../account/login'" />
+    </div>
+}
+<div id="dialog" title="Basic dialog">
+</div>
+<script>
+    $("#menu").menu().hide();
+</script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui1.css">
+<style>
+    .visibility {
+        visibility: visible;
+    }
+
+    .invisibility {
+        visibility: hidden;
+    }
+
+    .ui-widget-content {
+        border: gray 1px solid;
+    }
+
+    .ui-menu .ui-menu-divider {
+        display: none;
+    }
+
+    .navbar-default {
+        background-color: transparent;
+        border: none;
+    }
+
+    .ui-menu .ui-menu-item {
+        min-width: 200px;
+        padding: 5px 20px;
+        border: whitesmoke 1px solid;
+    }
+
+        .ui-menu .ui-menu-item:hover {
+            color: black;
+        }
+
+    .navbar-nav > li > .dropdown-menu {
+        margin-top: 3px;
+        padding: 0;
+    }
+
+    .dropdown-menu li {
+        border-bottom: whitesmoke 1px solid;
+    }
+
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+        background-color: transparent;
+    }
+
+    .dropdown-menu > li > a {
+        padding: 3px 38px;
+    }
+
+    .arrow-up {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid black;
+    }
+</style>

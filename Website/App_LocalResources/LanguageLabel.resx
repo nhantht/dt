@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AccountList" xml:space="preserve">
+    <value>Account List</value>
+  </data>
+  <data name="AccountToLogin" xml:space="preserve">
+    <value>Use a local account to log in.</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="ADVAddCredit" xml:space="preserve">
+    <value>Ad ad credit</value>
+  </data>
+  <data name="ADVCenter" xml:space="preserve">
+    <value>Ad Center</value>
+  </data>
+  <data name="ADVCredit" xml:space="preserve">
+    <value>Ad Credit</value>
+  </data>
+  <data name="Advertisement" xml:space="preserve">
+    <value>Advertisement</value>
+  </data>
+  <data name="Advertising" xml:space="preserve">
+    <value>Advertising</value>
+  </data>
+  <data name="AlreadyHaveAccount" xml:space="preserve">
+    <value>Already have an account?</value>
+  </data>
+  <data name="Business" xml:space="preserve">
+    <value>Business</value>
+  </data>
+  <data name="Campaign" xml:space="preserve">
+    <value>Campaigns</value>
+  </data>
+  <data name="Config" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="ConfirmedEmail" xml:space="preserve">
+    <value>Confirmed Email</value>
+  </data>
+  <data name="ConfirmedNewPassword" xml:space="preserve">
+    <value>New password again</value>
+  </data>
+  <data name="ConfirmedPassword" xml:space="preserve">
+    <value>Password again</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="CreateAccount" xml:space="preserve">
+    <value>Create account</value>
+  </data>
+  <data name="CreateNewPassword" xml:space="preserve">
+    <value>Create new password</value>
+  </data>
+  <data name="CreateYourAccount" xml:space="preserve">
+    <value>Create your Website account</value>
+  </data>
+  <data name="DefaultSearchText" xml:space="preserve">
+    <value>Enter a keyword for search</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailToRetrievePassword" xml:space="preserve">
+    <value>Please check you email to retrieve your password.</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Enter your email.</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="ForgetPassword" xml:space="preserve">
+    <value>Forget Password</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="ForgotPasswordMessage" xml:space="preserve">
+    <value>Enter your mobile phone number associated with your website account, then click Continue. We'll help you easily create a new password.</value>
+  </data>
+  <data name="ForgotPasswordMessage2" xml:space="preserve">
+    <value>Please check your email associated with your website account, then create your new password.</value>
+  </data>
+  <data name="Fullname" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="InvalidLink" xml:space="preserve">
+    <value>Invalid Links</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>France</value>
+  </data>
+  <data name="LanguageIcon" xml:space="preserve">
+    <value>vi.gif</value>
+  </data>
+  <data name="LanguageKey" xml:space="preserve">
+    <value>vi</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Logoff" xml:space="preserve">
+    <value>Log off</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New pasword</value>
+  </data>
+  <data name="NewToWebsite" xml:space="preserve">
+    <value>New to Website?</value>
+  </data>
+  <data name="NotExistEmail" xml:space="preserve">
+    <value>We can not detect your email.</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RegisterAgreementPart1" xml:space="preserve">
+    <value>By creating an account, you agree to our website' s</value>
+  </data>
+  <data name="RegisterAgreementPart2" xml:space="preserve">
+    <value>Terms of Use</value>
+  </data>
+  <data name="RegisterAgreementPart3" xml:space="preserve">
+    <value>and</value>
+  </data>
+  <data name="RegisterAgreementPart4" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="RegisterAgreementPart5" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SigninAgreementPart1" xml:space="preserve">
+    <value>By signing in you are agreeing to our</value>
+  </data>
+  <data name="SigninAgreementPart2" xml:space="preserve">
+    <value>Conditions of Use and Sale</value>
+  </data>
+  <data name="SigninAgreementPart3" xml:space="preserve">
+    <value>and our</value>
+  </data>
+  <data name="SigninAgreementPart4" xml:space="preserve">
+    <value>Privacy Notice</value>
+  </data>
+  <data name="SigninAgreementPart5" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SuccessfulChangedPassword" xml:space="preserve">
+    <value>Your new password is successfully created.</value>
+  </data>
+  <data name="SuccessfulRegister1" xml:space="preserve">
+    <value>Your website account is successfully created. Please check your email to activate the account before using the website. In case you don't see the activation email, please check Spam.</value>
+  </data>
+  <data name="SuccessfulRegister2" xml:space="preserve">
+    <value>Enjoy your experience with us!</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="Terms" xml:space="preserve">
+    <value>Terms</value>
+  </data>
+  <data name="UserGuide" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="UserPolicy" xml:space="preserve">
+    <value>Policy</value>
+  </data>
+  <data name="YourPhone" xml:space="preserve">
+    <value>Your mobile phone number</value>
+  </data>
+  <data name="YourPhonePlaceholder" xml:space="preserve">
+    <value>phone number without trunk prefix</value>
+  </data>
+  <data name="AdGroups" xml:space="preserve">
+    <value>Ad groups</value>
+  </data>
+  <data name="Campaigns" xml:space="preserve">
+    <value>Campaigns</value>
+  </data>
+  <data name="KeywordDetails" xml:space="preserve">
+    <value>Keyword Details</value>
+  </data>
+  <data name="Keywords" xml:space="preserve">
+    <value>Keywords</value>
+  </data>
+  <data name="URLs" xml:space="preserve">
+    <value>URLs</value>
+  </data>
+</root>

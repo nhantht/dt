@@ -1,0 +1,197 @@
+﻿@model Website.Models.DetailLinkViewModels
+@{
+    List<Website.Models.DetailKeywordViewModels> keywordList = ViewBag.KeywordList as List<Website.Models.DetailKeywordViewModels>;
+}
+<h2>Detail Link</h2>
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.URL)
+    </dt>
+
+    <dd>
+        <a>
+            @Html.DisplayFor(model => model.URL)
+        </a>
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Title)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Title)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Picture)
+    </dt>
+
+    <dd>
+        <img src="@Model.Picture" style="width:200px;height:100px;"/>
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Price)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Price)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DeviceId)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DeviceId)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.UnitName)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.UnitName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.AreaName)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.AreaName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.TimeFrameName)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.TimeFrameName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DisplayNumber)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DisplayNumber)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Budget)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Budget)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.CreatedDate)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.CreatedDate)
+    </dd>
+
+</dl>
+<p>
+    @Html.ActionLink("Edit", "EditLink", new { id = Model.Id }) |
+    @Html.ActionLink("Back", "detailcategory", new { Id = 1 })
+</p>
+<hr />
+<h4>Keyword List</h4>
+<p>
+    @Html.ActionLink("Create New", "CreateKeyword")
+</p>
+<table class="table">
+    <tr>
+        <th>Index</th>
+        <th>
+            Keyword
+        </th>
+        <th>
+            Display Type
+        </th>
+        <th>
+            Exclude
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Bid (USD)
+        </th>
+        <th>
+            Display Number
+        </th>
+        <th>
+            Display Rate
+        </th>
+        <th>
+            Clicked Rate
+        </th>
+        <th>
+            Real AVG Price
+        </th>
+        <th>
+            Total
+        </th>
+        <th></th>
+    </tr>
+    @{
+        int i = 0;
+    }
+    @foreach (Website.Models.DetailKeywordViewModels item in keywordList)
+    {
+        i++;
+        <tr>
+            <td>
+                @i
+            </td>
+            <td>
+                <a href="#">@Html.DisplayFor(modelItem => item.Keyword)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Exclude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClickedRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealAVGPrice)<label>%</label>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditKeyword", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteKeyword", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>

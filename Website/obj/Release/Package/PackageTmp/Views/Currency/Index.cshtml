@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Admin.Models.CurrencyDetailViewModel>
+<h2>Currency List</h2>
+<p>
+    @Html.ActionLink("Create New", "Create", new { fromChild = ViewBag.FromChild })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id, fromChild = ViewBag.FromChild }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id, fromChild = ViewBag.FromChild }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id, fromChild = ViewBag.FromChild })
+            </td>
+        </tr>
+    }
+
+</table>
+@if (ViewBag.FromChild && Model.Count() > 0)
+{
+    <script>
+        $(document).ready(function () {
+            window.opener.refreshCurrencyList("@Newtonsoft.Json.JsonConvert.SerializeObject(Model)");
+        });
+    </script>
+});

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/plugins")
+    @Styles.Render("~/Content/app")
+    <link href="~/Content/bootstrap-formhelpers.min.css" rel="stylesheet" />
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/plugins")
+    @Scripts.Render("~/bundles/app")
+</head>
+<body>
+    <div class="container-fluid dt-container-fluid">
+        @Html.Partial("_LoginPartial")
+        <div class="container-fluid body-content">
+            @Html.Partial("_logo")
+            <div class="middle-content">
+                @{
+                    ViewBag.Budget = "$0.00 USD";
+                }
+                <div class="row">
+                    <div class="col-sm-3 col-md-3 col-lg-3 adv-detail-container-left">
+                        <h2>@Website.App_LocalResources.LanguageLabel.Advertising</h2>
+                        <label class="control-label">@Website.App_LocalResources.LanguageLabel.ADVCredit: </label>
+                        <div class="adv-budget">@ViewBag.Budget</div>
+                        <input type="button" id="btnAddADVBudget" value="@Website.App_LocalResources.LanguageLabel.ADVAddCredit" class="btn btn-default btn-full"></input>
+                    </div>
+                    <div class="col-sm-9 col-md-9 col-lg-9" style="padding-left:0">
+                        <p></p>
+                        <div class="adv-detail-container-right">
+                            <div class="adv-center-lable-container"><span class="adv-center-lable">@Website.App_LocalResources.LanguageLabel.ADVCenter</span></div>
+                            <div>@Website.App_LocalResources.Message.NotYetCampaign1 <a>@Website.App_LocalResources.Message.NotYetCampaign2</a> @Website.App_LocalResources.Message.NotYetCampaign3 <a>@Website.App_LocalResources.Message.NotYetCampaign4</a></div>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="adv-detail-container">
+                    @RenderBody()
+                </div>
+                <div class="adv-list-container">
+                    <div id="tabList">
+                        <ul>
+                            <li>
+                                <a href="#tabs-1">@Website.App_LocalResources.LanguageLabel.Campaigns</a>
+                                <a href="adv/createcampaign"><img class="adv-plus-icon" /></a>
+                            </li>
+                            <li><a href="#tabs-2">@Website.App_LocalResources.LanguageLabel.AdGroups</a><img class="adv-plus-icon" /></li>
+                            <li><a href="#tabs-3">@Website.App_LocalResources.LanguageLabel.URLs</a><img class="adv-plus-icon" /></li>
+                            <li><a href="#tabs-4">@Website.App_LocalResources.LanguageLabel.Keywords</a><img class="adv-plus-icon" /></li>
+                            <li><a href="#tabs-5">@Website.App_LocalResources.LanguageLabel.KeywordDetails</a><img class="adv-plus-icon" /></li>
+                        </ul>
+                        <div id="tabs-1">
+                        </div>
+                        <div id="tabs-2">
+                        </div>
+                        <div id="tabs-3">
+                        </div>
+                        <div id="tabs-4">
+                        </div>
+                        <div id="tabs-5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_Footer")       
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        $("input[type='text']").addClass("text-box");
+    });
+</script>

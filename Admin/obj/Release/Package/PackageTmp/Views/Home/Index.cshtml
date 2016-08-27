@@ -1,0 +1,16 @@
+﻿<div class="container search-content">
+    <div class="form search-section">
+        <div>
+            <label class="company-name">@Admin.App_LocalResources.Company.Name</label>
+        </div>
+        <div class="form-group">
+            @Html.TextBox("txtSearch", string.Empty, new { maxlength = 200, @class = "search-text", placeholder = Admin.App_LocalResources.LanguageLabel.DefaultSearchText })
+            <input type="button" class="search-button" id="btnSearch" value="" tabindex="0" name="go">
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#txtSearch").focus();
+            $(".middle-content").removeClass("middle-content");
+        });
+    </script>

@@ -1,0 +1,116 @@
+﻿@model PagedList.IPagedList<Website.Models.URLListViewModels>
+@using PagedList.Mvc;
+@if (@Model.PageCount == 0 && Model.Count == 0)
+{
+    <script>
+        $("#noObject").html("You don't have any URL in category " + $("#categoryName").text().replace(">","") + ", <a href='javascript:URLObj.showCreation();'>add one now</a>");
+        $("#noObject").show();
+    </script>
+}
+else
+{
+    <script>
+        $("#noObject").html("");
+        $("#noObject").hide();
+    </script>
+}
+<table class="table">
+    <tr>
+        <th class="text-center">
+            Order
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().URL)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Budget)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Status)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DisplayTimes)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CTR)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AverageCPD)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DisplayDevices)
+        </th>
+    </tr>
+    @{
+        int i = 0;
+        Service.ADV.URL url = new Service.ADV.URL();
+        Service.ADV.DeviceTypeInput deviceType = null;
+        string title = string.Empty;
+    }
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td class="text-center">
+                @i
+            </td>
+            <td>
+                @{
+                    deviceType = url.GetURLDeviceList(0, string.Empty, item.Id).FirstOrDefault();
+                    if (deviceType != null && string.IsNullOrEmpty(deviceType.Title) == false)
+                    {
+                        title = deviceType.Title;
+                    }
+                    else
+                    {
+                        title = item.URL;
+                    }
+                }
+                <a href="javascript:URLObj.showDetail(@item.Id, '@title', false)">@title</a>
+                <a href="javascript:URLObj.showDetail(@item.Id, '@title', true)" class="pull-right">
+                    <img src="~/Images/edit.png" style="width:15px" />
+                </a>
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+            <td class="text-center">
+                @if (item.Status)
+                {
+                    <label style="color:green">On</label>
+                }
+                else
+                {
+                    <label style="color:red">Off</label>
+                }
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.DisplayTimes)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.CTR)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.AverageCPD)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td class="text-left">
+                @Html.DisplayFor(modelItem => item.DisplayDevices)
+            </td>
+        </tr>
+    }
+</table>
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+
+@Html.PagedListPager(Model, page => "javascript:URLObj.loadList(" + page + ")")
+@*URLObj.Action("Categorylist",new { page})*@
+<script>
+    $(document).ready(function(){
+        URLObj.settings.page = @Model.PageNumber;
+    });
+</script>

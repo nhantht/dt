@@ -1,0 +1,68 @@
+﻿@model Website.Models.DetailKeywordViewModels
+<h2>Edit Keyword</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form">
+        <hr />
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Keyword, htmlAttributes: new { @class = "control-label" })
+
+            @Html.EditorFor(model => model.Keyword, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisplayTypeName, htmlAttributes: new { @class = "control-label" })
+            <select class="form-control">
+                <option>Đủ keywords (loại 1)</option>
+                <option>Theo đúng thứ tự keywords (loại 2)</option>
+                <option>Chính xác keywords (loại 3)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Exclude, htmlAttributes: new { @class = "control-label" })
+
+            @Html.EditorFor(model => model.Exclude, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StatusName, htmlAttributes: new { @class = "control-label" })
+
+            <select class="form-control">
+                <option>Hoạt động</option>
+                <option>Tạm ngưng</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
+
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisplayNumber, htmlAttributes: new { @class = "control-label" })
+
+            @Html.EditorFor(model => model.DisplayNumber, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClickedRate, htmlAttributes: new { @class = "control-label" }) (%)
+
+            @Html.EditorFor(model => model.ClickedRate, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary btn-full" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "detaillink", new { id = 1 })
+</div>

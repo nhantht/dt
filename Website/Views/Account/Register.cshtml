@@ -1,0 +1,84 @@
+﻿@model Admin.Models.RegisterViewModel
+@{
+    string[] data = ViewBag.DisplayedCountryListData as string[];
+}
+<h2>@Website.App_LocalResources.LanguageLabel.CreateAccount</h2>
+@*@languageData*@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    if (string.IsNullOrEmpty(Model.Message) == false)
+    {
+        <ul class="text-danger" style="width:320px">
+            <li>@Model.Message</li>
+        </ul>
+    }
+    <div class="form register-form">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "vadRegister" })
+        <div class="form-control" style="border: none;background-color: transparent; box-shadow: none;padding-left:0;padding-right:0; margin-bottom:44px">
+            <label class="control-label">@Website.App_LocalResources.LanguageLabel.YourPhone</label>
+            @Html.HiddenFor(model => model.CountryCode)
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", style = "width:100%", maxlength = 15, placeholder = Website.App_LocalResources.LanguageLabel.YourPhonePlaceholder } })
+            <script>
+                $("#Phone").intlTelInput({ nationalMode: false });
+            </script>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", maxlength = 200 } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", maxlength = 200, placeholder = @Website.App_LocalResources.Error.PasswordRule } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", maxlength = 200 } })
+        </div>
+        <div class="form-group">
+            <input type="submit" value="@Website.App_LocalResources.LanguageLabel.CreateYourAccount" onclick="return validateData();" id="btnRegister" class="btn btn-primary btn-full" />
+        </div>
+        <div class="form-group">
+            <p class="register-terms">
+                @Website.App_LocalResources.LanguageLabel.RegisterAgreementPart1
+                @Html.ActionLink(Website.App_LocalResources.LanguageLabel.RegisterAgreementPart2, "terms", "home")
+                @Website.App_LocalResources.LanguageLabel.RegisterAgreementPart3
+                @Html.ActionLink(Website.App_LocalResources.LanguageLabel.RegisterAgreementPart4, "privacy", "home")
+                @Website.App_LocalResources.LanguageLabel.RegisterAgreementPart5.Trim()
+            </p>
+        </div>
+        <hr class="small-hr" />
+        <div class="form-group">
+            <span>@Website.App_LocalResources.LanguageLabel.AlreadyHaveAccount</span>
+            @Html.ActionLink(@Website.App_LocalResources.LanguageLabel.Login, "login")
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        User.detectCountryCode();
+        Util.Layout.hidePageHeader();
+        $("#Phone").blur(function () {
+            if ($.isNumeric($(this).val()) == false) {
+                this.focus();
+            }
+        });
+    });
+    function validateData() {
+        User.setCountryCode();
+        if ($.isNumeric($("#Phone").val()) == false) {
+            $("#Phone").val("");
+        }
+        if ($("#vadRegister").find("li").length == 0) {
+            Util.Layout.showLoading();
+        }
+
+        return true;
+    }
+</script>

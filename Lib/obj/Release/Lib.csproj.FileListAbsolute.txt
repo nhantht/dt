@@ -1,0 +1,6 @@
+D:\Project\DT\Website\DT\Lib\bin\Release\Lib.dll
+D:\Project\DT\Website\DT\Lib\bin\Release\Lib.pdb
+D:\Project\DT\Website\DT\Lib\obj\Release\Lib.csprojResolveAssemblyReference.cache
+D:\Project\DT\Website\DT\Lib\obj\Release\Lib.dll
+D:\Project\DT\Website\DT\Lib\obj\Release\Lib.pdb
+D:\Project\DT\Website\DT\Lib\bin\Release\SimpleCrypto.dll

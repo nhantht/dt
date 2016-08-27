@@ -1,0 +1,60 @@
+﻿@model PagedList.IPagedList<Website.Models.IndexDetailModel>
+@using PagedList.Mvc;
+<table class="table">
+    <tr>
+        <th class="text-center">
+            Order
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().URL)
+        </th>
+        <th class="text-left" style="width:200px">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
+        </th>
+        <th class="text-right" style="width:150px">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+        </th>
+        <th class="text-center" style="width:250px">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CreatedDate)
+        </th>
+        <th class="text-left">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Picture)
+        </th>
+    </tr>
+    @{
+        int i = 0;
+    }
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td class="text-center">
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.URL)
+                <a href="javascript:Index.showDetail(@item.Id)" class="pull-right">
+                    <img src="~/Images/edit.png" style="width:15px" />
+                </a>
+            </td>
+            <td class="text-left">
+                    @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td class="text-left">
+                <img src="@Html.DisplayFor(model => item.Picture)" style="max-height:100px" />
+            </td>
+        </tr>
+    }
+</table>
+@Html.PagedListPager(Model, page => "javascript:Index.loadList(" + page + ")")
+<script>
+    $(document).ready(function(){
+        Index.settings.page = @Model.PageNumber;
+    });
+</script>

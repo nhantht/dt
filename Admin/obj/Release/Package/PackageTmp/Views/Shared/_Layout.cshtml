@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/app")
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/plugins")
+    @Scripts.Render("~/bundles/app")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/home/index"><img src="../images/logo.png" class="logo" /></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink(Admin.App_LocalResources.LanguageLabel.About, "About", "Home")</li>
+                    <li>@Html.ActionLink(Admin.App_LocalResources.LanguageLabel.Contact, "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="middle-content">
+            @RenderBody()
+        </div>
+        <hr />
+        <footer>
+            <p>
+                &copy; 2016 - @Admin.App_LocalResources.Company.Name
+                @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.About, "about") |
+                @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.UserGuide, "help") |
+                @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.UserPolicy, "policy") |
+                @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.Privacy, "privacy") |
+                @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.Contact, "contact") |
+                @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.Advertisement, "advertisement")
+            </p>
+        </footer>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

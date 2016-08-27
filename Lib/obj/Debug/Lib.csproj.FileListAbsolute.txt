@@ -1,0 +1,10 @@
+D:\Project\DT\Website\DT\Service\bin\Debug\Lib.dll
+D:\Project\DT\Website\DT\Service\bin\Debug\Lib.pdb
+D:\Project\DT\Website\DT\Service\obj\Debug\Lib.dll
+D:\Project\DT\Website\DT\Service\obj\Debug\Lib.pdb
+D:\Project\DT\Website\DT\Lib\bin\Debug\Lib.dll
+D:\Project\DT\Website\DT\Lib\bin\Debug\Lib.pdb
+D:\Project\DT\Website\DT\Lib\bin\Debug\SimpleCrypto.dll
+D:\Project\DT\Website\DT\Lib\obj\Debug\Lib.dll
+D:\Project\DT\Website\DT\Lib\obj\Debug\Lib.pdb
+D:\Project\DT\Website\DT\Lib\obj\Debug\Lib.csprojResolveAssemblyReference.cache

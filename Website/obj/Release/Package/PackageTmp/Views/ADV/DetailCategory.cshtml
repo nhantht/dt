@@ -1,0 +1,83 @@
+﻿@model Website.Models.DetailCategoryViewModels
+@{
+    List<Website.Models.DetailLinkViewModels> linkList = ViewBag.LinkList as List<Website.Models.DetailLinkViewModels>;
+}
+<h2>Detail Category</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Budget)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Budget)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditCategory", new { id = Model.Id }) |
+    @Html.ActionLink("Back to Campaign", "details", new { id = Model.CampaignId })
+</p>
+<hr />
+<h4>Link List</h4>
+<p>
+    @Html.ActionLink("Create New", "CreateLink")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            URL
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Budget
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+    </tr>
+    @foreach (Website.Models.DetailLinkViewModels item in linkList)
+    {
+        <tr>
+            <td>
+                <a href="@item.URL">@Html.DisplayFor(modelItem => item.URL)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditLink", new { id = item.Id }) |
+                @Html.ActionLink("Details", "DetailLink", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteLink", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+

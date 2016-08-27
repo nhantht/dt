@@ -1,0 +1,47 @@
+﻿@using Admin.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = Admin.App_LocalResources.LanguageLabel.Login;
+}
+
+<h2>@ViewBag.Title.</h2>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label">@Admin.App_LocalResources.LanguageLabel.YourPhone</label>
+            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            @Html.ActionLink(@Admin.App_LocalResources.LanguageLabel.ForgotPassword, "ForgotPassword", "manage", new { @class="pull-right"})
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+            </div>*@
+        <div class="form-group">
+            <input type="submit" value="@Admin.App_LocalResources.LanguageLabel.Login" class="btn btn-primary btn-full" />
+        </div>
+        <div class="form-control-noborder" style="text-align:center">
+            -------------
+            @Admin.App_LocalResources.LanguageLabel.NewToWebsite
+            -------------
+        </div>
+        <div class="form-group">
+            <input type="button" onclick="document.location='register'" value="@Admin.App_LocalResources.LanguageLabel.CreateYourAccount" id="btnRegister" class="btn btn-default btn-full" />
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

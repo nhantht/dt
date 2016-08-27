@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Budget = "$0.00 USD";
+}
+<div id="divADV">
+    <div class="row" style="border-bottom:1px solid silver">
+        <div class="col-sm-3 col-md-3 col-lg-3 adv-detail-container-left">
+            <h2>@Website.App_LocalResources.LanguageLabel.Advertising</h2>
+            <label class="control-label">@Website.App_LocalResources.LanguageLabel.ADVCredit: </label>
+            <div class="adv-budget">@ViewBag.Budget</div>
+            <input type="button" id="btnAddADVBudget" value="@Website.App_LocalResources.LanguageLabel.ADVAddCredit" class="btn btn-default btn-full"></input>
+        </div>
+        <div class="col-sm-9 col-md-9 col-lg-9" style="padding-left:0">
+            <p></p>
+            <div class="adv-detail-container-right">
+                <div class="adv-center-lable-container">
+                    <span class="adv-center-lable">
+                        @Website.App_LocalResources.LanguageLabel.ADVCenter
+                        <span class="divider" id="campaignDivider"> > </span>
+                        <a id="campaignName"></a>
+                        <span id="campaignId" class="sr-only"></span>
+                        <span class="divider" id="categoryDivider"> > </span>
+                        <a id="categoryName"></a>
+                        <span id="categoryId" class="sr-only"></span>
+                        <span class="divider" id="urlDivider"> > </span>
+                        <a id="urlName"></a>
+                        <span id="urlId" class="sr-only"></span>
+                        <span class="divider" id="keywordDivider"> > </span>
+                        <span id="keywordName"></span>
+                        <span id="keywordId" class="sr-only"></span>
+                    </span>
+                </div>
+                <div id="noObject"></div>
+            </div>
+            <p></p>
+        </div>
+    </div>
+    <div class="adv-detail-container">
+    </div>
+    <div class="adv-list-container">
+        <div id="tabList">
+            <ul>
+                <li>
+                    <a href="#tabs-1">@Website.App_LocalResources.LanguageLabel.Campaigns</a>
+                    <span class="adv-plus-icon" />
+                </li>
+                <li><a href="#tabs-2">@Website.App_LocalResources.LanguageLabel.AdGroups</a><span class="adv-plus-icon" /></li>
+                <li><a href="#tabs-3">@Website.App_LocalResources.LanguageLabel.URLs</a><span class="adv-plus-icon" /></li>
+                <li><a href="#tabs-4">@Website.App_LocalResources.LanguageLabel.Keywords</a><span class="adv-plus-icon" /></li>
+                <li><a href="#tabs-5">@Website.App_LocalResources.LanguageLabel.KeywordDetails</a><span class="adv-plus-icon" /></li>
+            </ul>
+            <div id="tabs-1">
+
+            </div>
+            <div id="tabs-2">
+            </div>
+            <div id="tabs-3">
+            </div>
+            <div id="tabs-4">
+            </div>
+            <div id="tabs-5">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        ADV.init();
+    });
+</script>

@@ -1,0 +1,96 @@
+﻿@model PagedList.IPagedList<Website.Models.CampaignListViewModels>
+@using PagedList.Mvc;
+@if (@Model.PageCount == 0 && Model.Count == 0)
+{
+    <script>
+        $("#noObject").html("@Website.App_LocalResources.Message.NotYetCampaign1 <a href='javascript:Campaign.showCreation()'>@Website.App_LocalResources.Message.NotYetCampaign2</a> @Website.App_LocalResources.Message.NotYetCampaign3 <a>@Website.App_LocalResources.Message.NotYetCampaign4</a>");
+        $("#noObject").show();
+    </script>
+}
+else
+{
+    <script>
+        $("#noObject").html("");
+        $("#noObject").hide();
+    </script>
+}
+<table class="table">
+    <tr>
+        <th class="text-center">
+            Order
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Budget)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Status)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DisplayTimes)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CTR)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AverageCPD)
+        </th>
+        <th class="text-right">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Cost)
+        </th>
+    </tr>
+    @{
+        int i = 0;
+    }
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td class="text-center">
+                @i
+            </td>
+            <td>
+                <a href="javascript:Campaign.showDetail(@item.Id, '@item.Name', false)">@Html.DisplayFor(modelItem => item.Name)</a>
+                <a href="javascript:Campaign.showDetail(@item.Id, '@item.Name', true)" class="pull-right">
+                    <img src="~/Images/edit.png" style="width:15px" />
+                </a>
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+            <td class="text-center">
+                @if (item.Status)
+                {
+                    <label style="color:green">On</label>
+                }
+                else
+                {
+                    <label style="color:red">Off</label>
+                }
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.DisplayTimes)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.CTR)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.AverageCPD)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+        </tr>
+    }
+</table>
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+
+@Html.PagedListPager(Model, page => "javascript:Campaign.loadList(" + page + ")")
+@*URLObj.Action("campaignlist",new { page})*@
+<script>
+    $(document).ready(function(){
+        Campaign.settings.page = @Model.PageNumber;
+    });
+</script>

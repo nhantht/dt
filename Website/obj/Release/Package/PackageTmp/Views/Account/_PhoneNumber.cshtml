@@ -1,0 +1,38 @@
+﻿@using Website.Models
+@{
+    string patern = "sq_AL,hy_AM,eu_ES,be_BY,bg_BG,ca_ES,hr_HR,cs_CZ,da_DK,et_EE,fo_FO,fi_FI,gl_ES,ka_GE,el_GR,hu_HU,is_IS"
+                 + ",hi_IN,id_ID,fa_IR,he_IL,it_IT,ja_JP,kk_KZ,sw_KE,ko_KR,lv_LV,lt_LT,de_LU,ms_MY,fr_MC,mn_MN,nn_NO,ur_PK,pl_PL"
+                 + ",pt_PT,ro_RO,ru_RU,sk_SK,sl_SI,af_ZA,sv_SE,zh_TW,th_TH,nl_NL,tr_TR,uk_UA,es_VE,vi_VN,ar_YE,en_ZW,mk_MK";
+
+    Service.Region.CountryObj country = new Service.Region.CountryObj();
+
+    List<string> list = (from s in country.GetAvailableLanguages(patern)
+                         orderby s.Name
+                         select s.TelephoneCode1
+                         ).ToList();
+
+    string codes = string.Join(",", list);
+
+    list = (from s in country.GetAvailableLanguages(patern)
+            orderby s.Name
+            select s.Name
+                         ).ToList();
+
+    string countryNames = string.Join(",", list);
+
+    //Clean
+    country = null;
+    list = null;
+}
+<div id="lstCountry" class="bfh-selectbox bfh-languages" data-blank="false" data-language="vi_VN"
+     data-available="sq_AL,hy_AM,eu_ES,be_BY,bg_BG,ca_ES,hr_HR,cs_CZ,da_DK,et_EE,fo_FO,fi_FI,gl_ES,ka_GE,el_GR,hu_HU,is_IS
+                 ,hi_IN,id_ID,fa_IR,he_IL,it_IT,ja_JP,kk_KZ,sw_KE,ko_KR,lv_LV,lt_LT,de_LU,ms_MY,fr_MC,mn_MN,nn_NO,ur_PK,pl_PL
+                 ,pt_PT,ro_RO,ru_RU,sk_SK,sl_SI,af_ZA,sv_SE,zh_TW,th_TH,nl_NL,tr_TR,uk_UA,es_VE,vi_VN,ar_YE,en_ZW,mk_MK"
+     @*data-available="af_ZA,ar_AE,ar_BH,ar_DZ,ar_EG,ar_IQ,ar_JO,ar_KW,ar_LB,ar_LY,ar_MA,ar_OM,ar_QA,ar_SA,ar_SY,ar_TN,ar_YE,be_BY,bg_BG,ca_ES,cs_CZ,da_DK,de_AT,de_CH
+                 ,de_DE,de_LI,de_LU,el_GR,en_AU,en_BZ,en_CA,en_GB,en_IE,en_JM,en_NZ,en_PH,en_TT,en_US,en_ZA,en_ZW,es_AR,es_BO,es_CL,es_CO,es_CR,es_EC,es_ES,es_GT
+                 ,es_hn,es_mx,es_ni,es_pa,es_pe,es_py,es_sv,es_uy,es_ve,et_ee,eu_es,fa_ir,fi_fi,fo_fo,fr_be,fr_ca,fr_ch,fr_fr,fr_lu,fr_mc,gl_es,gu_in,he_il,hi_in
+                 ,hr_HR,hu_HU,hy_AM,id_ID,is_IS,it_CH,it_IT,ja_JP,ka_GE,kk_KZ,kn_IN,ko_KR,ky_KZ,lt_LT,lv_LV,mk_MK,mn_MN,mr_IN,ms_BN,ms_MY,nb_NO,nl_BE,nl_NL,nn_NO
+                 ,pa_IN,pl_PL,pt_BR,pt_PT,ro_RO,ru_RU,sa_IN,sk_SK,sl_SI,sq_AL,sv_FI,sv_SE,sw_KE,ta_IN,te_IN,th_TH,tr_TR,tt_RU,uk_UA,ur_PK,vi_VN,zh_CHT,zh_CN,zh_HK
+                 ,zh_MO,zh_SG,zh_TW"*@
+     data-flags="true">
+</div>

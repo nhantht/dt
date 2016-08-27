@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Website.Models.IndexDetailModel>
+@{
+    Layout = null;
+}
+<table class="table">
+    <tr>
+        <th style="min-width:200px">
+            @Html.DisplayNameFor(model => model.URL)
+        </th>
+        <th width="200px">
+
+            @Html.DisplayNameFor(model => model.Title)
+
+        </th>
+        <th width="150px">
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th width="400">
+
+            @Html.DisplayNameFor(model => model.ShortDescription)
+
+        </th>
+        <th width="100px">
+            @Html.DisplayNameFor(model => model.Picture)
+        </th>
+        <th width="100px">Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="@Html.DisplayFor(modelItem => item.URL)">
+                    @Html.DisplayFor(modelItem => item.URL)
+                </a>
+            </td>
+            <td>
+                <div style="width:100%;max-height:100px;overflow:auto">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <div style="width:100%;max-height:100px;overflow:auto">
+                    @Html.DisplayFor(modelItem => item.ShortDescription)
+                </div>
+            </td>
+            <td>
+                <img src="@Html.DisplayFor(modelItem => item.Picture)" style="height:100px" />
+            </td>
+            <td>
+                @{
+        string id = Guid.NewGuid().ToString();
+                }
+                <a id="btnAccept_@id" href="javascript:accept('btnAccept_@id', '@Uri.EscapeUriString(item.URL)', '@item.Title', '@item.Price', '@Uri.EscapeUriString(item.ShortDescription)', '@Uri.EscapeUriString(item.Picture)')">Accept</a>
+                <img src="~/Images/error.png" class="index-error" style="width:20px" />
+            </td>
+        </tr>
+    }
+</table>
+<script>
+    function accept(id, url, title, price, shortDescription, picture) {
+        Util.Layout.showLoading();
+        $.ajax({
+            type: "post",
+            url: "create",
+            data: { model: { URL: url, Price: price, Title: title, ShortDescription: shortDescription, Picture: picture, IsOverride: $("#IsOverride").prop("checked") } },
+            success: function (response) {
+                if (response.Message.length == 0) {
+                    $("#" + id).closest("tr").remove();
+                } else {
+                    $("#" + id).next().attr("title", response.Message);
+                    $("#" + id).next().show();
+                }
+                Util.Layout.hideLoading();
+            },
+            error: function () {
+                Util.Layout.hideLoading();
+            }
+        });
+    }
+    function init() {
+        $(".index-error").toggle();
+    }
+    $(document).ready(function () {
+        init();
+    });
+</script>

@@ -1,0 +1,41 @@
+﻿@model Admin.Models.TimeFrameDetailViewModel
+<h2>Time Frame Details</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FromHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToHour)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id, fromChild = Model.FromChild }) |
+    @Html.ActionLink("Back to List", "Index", new { fromChild = Model.FromChild })
+</p>
+<style>
+    .dl-horizontal dt{
+        width:auto;
+    }
+    .dl-horizontal dd{
+        margin-left:80px;
+    }
+</style>

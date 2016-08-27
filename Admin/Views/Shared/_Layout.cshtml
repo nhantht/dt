@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/app")
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/plugins")
+    @Scripts.Render("~/bundles/app")
+</head>
+<body>
+    <div class="container-fluid">
+        @Html.Partial("_LoginPartial")
+        <div class="container-fluid body-content">
+            @Html.Partial("_logo")
+            <div class="middle-content">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="footer">
+            <footer>
+                <p>
+                    @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.Advertisement, "advertisement")
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.Business, "Business")
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.About, "about")
+                    <a class="pull-right" href="../language/change/@Admin.App_LocalResources.LanguageLabel.LanguageKey"><img src="../images/@Admin.App_LocalResources.LanguageLabel.LanguageIcon" /></a>
+                    <span class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.Settings, "help", null, new { @class = "pull-right" })
+                    <span class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.UserPolicy, "policy", null, new { @class = "pull-right" })
+                    <span class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    @Html.ActionLink(Admin.App_LocalResources.LanguageLabel.Privacy, "privacy", null, new { @class = "pull-right" })
+                    <span class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </p>
+            </footer>
+        </div>
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

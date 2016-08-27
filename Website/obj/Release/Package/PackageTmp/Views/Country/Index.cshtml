@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Admin.Models.CountryDetailViewModel>
+<h2>Country List</h2>
+<p>
+    @Html.ActionLink("Create New", "Create", new { fromChild = ViewBag.FromChild })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelephoneCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CityNumber)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelephoneCode)
+            </td>
+            <td>
+                @Html.ActionLink(item.CityNumber.ToString(), "Index", "City", new { countryId = item.CountryId, fromChild = ViewBag.FromChild }, null)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CountryId, fromChild = ViewBag.FromChild }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CountryId, fromChild = ViewBag.FromChild }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CountryId, fromChild = ViewBag.FromChild })
+            </td>
+        </tr>
+    }
+</table>
+@if (ViewBag.FromChild && Model.Count() > 0)
+{
+    <script>
+        $(document).ready(function () {
+            @{
+                Service.Region.CityObj cityObject = new Service.Region.CityObj();
+                IEnumerable<SelectListItem> locationList = from u in cityObject.GetAllCities()
+                select new SelectListItem
+                {
+                    Value = u.CityId.ToString(),
+                    Text = u.Name + " (" + u.Country.Name + ")"
+                };
+            }
+            window.opener.refreshLocationList("@Newtonsoft.Json.JsonConvert.SerializeObject(locationList)");
+        });
+    </script>
+}
