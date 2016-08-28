@@ -22,7 +22,9 @@ namespace Website.Models
 
         [Display(Name = "Overried?")]
         public bool IsOverride { get; set; }
-        
+
+        public bool UnanalysedPicture { get; set; }
+
         [Display(Name = "Price Rule")]
         [Required(ErrorMessage = "Price Rule is required!")]
         [MaxLength(100)]

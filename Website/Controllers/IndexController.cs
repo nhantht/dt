@@ -197,7 +197,7 @@ namespace Website.Controllers
                     Price = model.Price,
                     CreatedDate = DateTime.Now,
                     UserId = User.Identity.Name
-                }) == false)
+                }, model.UnanalysedPicture) == false)
                 {
                     if (model.IsOverride)
                     {
@@ -209,7 +209,7 @@ namespace Website.Controllers
                             ShortDescription = model.Picture == null ? string.Empty : Uri.UnescapeDataString(model.ShortDescription),
                             Price = model.Price,
                             UserId = User.Identity.Name
-                        }) == false)
+                        }, model.UnanalysedPicture) == false)
                         {
                             model.Message = "Please contact an administrator!";
                         }
@@ -243,7 +243,7 @@ namespace Website.Controllers
                     ShortDescription = model.ShortDescription == null ? string.Empty : Uri.UnescapeDataString(model.ShortDescription),
                     Price = model.Price,
                     UserId = User.Identity.Name
-                }) == false)
+                }, model.UnanalysedPicture) == false)
                 {
                     model.Message = "URL was added by another";
                 }
@@ -255,6 +255,10 @@ namespace Website.Controllers
                 model.Message = err.Message;
                 return Json(model);
             }
+        }
+        public ActionResult DetechURL()
+        {
+            return View(new Models.IndexDetailModel());
         }
         public ActionResult Analyse(Models.IndexDetailModel model)
         {

@@ -24,7 +24,7 @@ namespace Service.Index
                     select u
             ).ToList();
         }
-        public bool Create(Data.Link link)
+        public bool Create(Data.Link link, bool UnanalysedPicture)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace Service.Index
                 //Save the link
                 link.Id = id;
                 //Move picture
-                if (link.Picture.Length > 0)
+                if (!UnanalysedPicture && link.Picture.Length > 0)
                 {
                     string[] parts = link.Picture.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
                     if (string.IsNullOrEmpty(parts[parts.Length - 1]) == false)
@@ -65,7 +65,7 @@ namespace Service.Index
                 return false;
             }
         }
-        public bool Update(Data.Link link)
+        public bool Update(Data.Link link, bool UnanalysedPicture)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace Service.Index
                     found.Title = link.Title;
                     found.Price = link.Price;
                     //Move picture
-                    if (link.Picture.Length > 0)
+                    if (!UnanalysedPicture && link.Picture.Length > 0)
                     {
                         string[] parts = link.Picture.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
                         if (string.IsNullOrEmpty(parts[parts.Length - 1]) == false)

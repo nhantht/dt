@@ -1,0 +1,71 @@
+﻿@model Website.Models.IndexDetailModel
+@{
+    ViewBag.Title = "Index URL";
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("index", "detechurl", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form", role = "form"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form register-form">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger", id = "messagePanel" })
+        <div class="form-control" style="border: none;background-color: transparent; box-shadow: none;padding-left:0;padding-right:0;margin-bottom:44px">
+            <label class="control-label">URL</label>
+            @Html.EditorFor(m => m.URL, new { htmlAttributes = new { @class = "form-control", maxlength = 200, placeholder = "Please enter URL here" } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PriceRule, new { @class = "control-label" })
+            @Html.EditorFor(m => m.PriceRule, new { htmlAttributes = new { @class = "form-control", maxlength = 100, placeholder = "Please enter Price Rule to analyse" } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.AnalysedChildren, new { @class = "control-label" })
+            @Html.EditorFor(m => m.AnalysedChildren, new { htmlAttributes = new { @class = "" } })
+            <span> (If you would like to detech child URLs)</span>
+        </div>
+        <div class="form-group">
+            <input type="button" value="Analyse" onclick="detechURLs()" class="btn btn-primary btn-full" />
+        </div>
+    </div>
+    <div class="form-group">
+        <h3>Analysed Result</h3>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.IsOverride, new { @class = "control-label" })
+        @Html.EditorFor(m => m.IsOverride, new { htmlAttributes = new { @class = "" } })
+        <span> (The URL you would like to accept was indexed before. Would you like to override it?)</span>
+    </div>
+    <div class="form-group">
+        <div id="divResult" style="height:300px;overflow:auto">
+
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        $(".text-danger").find("ul").attr("id", "messagePanel");
+        analyse();
+    });
+    function detechURLs() {
+        if (Validator.checkRequired("URL", "URL is required!")) {
+            analyse();
+        }
+    }
+    function analyse() {
+        Util.Layout.showLoading();
+        $.ajax({
+            type: "post",
+            url:"analyse",
+            data: { URL: $("#URL").val().trim(), PriceRule: $("#PriceRule").val().trim(), UnanalysedPicture: true, AnalysedChildren: $("#AnalysedChildren").attr("checked") },
+            success: function (response) {
+                $("#divResult").empty().html(response);
+                Util.Layout.hideLoading();
+            },
+            error: function () {
+                Util.Layout.hideLoading();
+            }
+        });
+    }
+</script>

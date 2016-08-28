@@ -470,6 +470,7 @@
     <Content Include="Views\Index\URLList.cshtml" />
     <Content Include="Views\Index\Analyse.cshtml" />
     <Content Include="Views\Index\Create.cshtml" />
+    <Content Include="Views\Index\DetechURL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
