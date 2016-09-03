@@ -24,6 +24,37 @@ namespace Service.Index
                     select u
             ).ToList();
         }
+        public Data.Link GetByURL(string URL)
+        {
+            return (from u in db.Links
+                    where (u.URL.Trim().ToLower()==URL.Trim().ToLower())
+                    select u).FirstOrDefault();
+        }
+        public bool CheckUnique(Data.Link link)
+        {
+            //Create the nes id
+            Data.Link found = db.Links.Where(m => m.Id != link.Id && m.URL == link.URL).FirstOrDefault();
+            return found != null;
+        }
+        public bool Delete(decimal id)
+        {
+            try
+            {
+                Data.Link link = db.Links.Where(s => s.Id == id).FirstOrDefault();
+                if (link != null)
+                {
+                    db.Links.Remove(link);
+                    db.SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception error)
+            {
+                MessageCode = "PerformmingError";
+                return false;
+            }
+        }
         public bool Create(Data.Link link, bool UnanalysedPicture)
         {
             try
@@ -69,7 +100,16 @@ namespace Service.Index
         {
             try
             {
-                Data.Link found = db.Links.OrderByDescending(m => m.Id).FirstOrDefault();
+                Data.Link found = null;
+                if (link.Id > 0)
+                {
+                    found = db.Links.OrderByDescending(m => m.Id == link.Id).FirstOrDefault();
+                }
+                else
+                {
+                    found = db.Links.OrderByDescending(m => m.URL.ToLower() == link.URL.Trim().ToLower()).FirstOrDefault();
+                }
+
                 if (found != null)
                 {
                     //Save the link

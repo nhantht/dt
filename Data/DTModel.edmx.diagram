@@ -48,6 +48,7 @@
         <AssociationConnector Association="dtModel.FK_NegativeMarchs_Keywords" />
         <EntityTypeShape EntityType="dtModel.Link" Width="1.5" PointX="12.375" PointY="11.75" />
         <AssociationConnector Association="dtModel.FK_Links_Users" />
+        <EntityTypeShape EntityType="dtModel.Schedule" Width="1.5" PointX="13.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

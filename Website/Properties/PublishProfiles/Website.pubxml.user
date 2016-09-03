@@ -37,7 +37,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/15/2016 10:37:23</publishTime>
     </File>
     <File Include="bin/Data.dll">
-      <publishTime>08/24/2016 16:16:37</publishTime>
+      <publishTime>09/03/2016 17:20:17</publishTime>
     </File>
     <File Include="bin/DataAnnotationsExtensions.ClientValidation.dll">
       <publishTime>03/16/2016 23:34:43</publishTime>
@@ -112,7 +112,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2016 15:02:48</publishTime>
     </File>
     <File Include="bin/Service.dll">
-      <publishTime>08/28/2016 16:32:08</publishTime>
+      <publishTime>09/03/2016 17:20:17</publishTime>
     </File>
     <File Include="bin/SimpleCrypto.dll">
       <publishTime>02/22/2016 22:51:36</publishTime>
@@ -139,7 +139,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/24/2016 00:10:57</publishTime>
     </File>
     <File Include="bin/vi/Website.resources.dll">
-      <publishTime>08/28/2016 16:32:09</publishTime>
+      <publishTime>09/03/2016 17:20:19</publishTime>
     </File>
     <File Include="bin/WebActivator.dll">
       <publishTime>03/16/2016 23:34:43</publishTime>
@@ -148,7 +148,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/15/2016 10:37:23</publishTime>
     </File>
     <File Include="bin/Website.dll">
-      <publishTime>08/28/2016 16:32:09</publishTime>
+      <publishTime>09/03/2016 17:20:18</publishTime>
     </File>
     <File Include="Content/adv.css">
       <publishTime>08/26/2016 00:31:35</publishTime>
@@ -337,7 +337,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2016 22:58:46</publishTime>
     </File>
     <File Include="Scripts/index.js">
-      <publishTime>08/26/2016 23:42:13</publishTime>
+      <publishTime>09/01/2016 00:22:58</publishTime>
     </File>
     <File Include="Scripts/intlTelInput.min.js">
       <publishTime>04/24/2016 13:11:48</publishTime>
@@ -400,10 +400,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2016 23:30:01</publishTime>
     </File>
     <File Include="Scripts/validator.js">
-      <publishTime>07/17/2016 23:37:02</publishTime>
+      <publishTime>09/01/2016 00:07:08</publishTime>
     </File>
     <File Include="Scripts/_references.js">
       <publishTime>04/16/2016 22:58:46</publishTime>
+    </File>
+    <File Include="Templates/URLTemplate.xml">
+      <publishTime>09/03/2016 17:08:22</publishTime>
     </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
       <publishTime>04/01/2016 23:48:41</publishTime>
@@ -637,7 +640,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/12/2016 22:56:00</publishTime>
     </File>
     <File Include="Views/Index/Analyse.cshtml">
-      <publishTime>08/28/2016 16:17:27</publishTime>
+      <publishTime>08/28/2016 21:31:15</publishTime>
     </File>
     <File Include="Views/Index/CampaignDetail.cshtml">
       <publishTime>08/22/2016 22:36:39</publishTime>
@@ -663,6 +666,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Index/CreateLink.cshtml">
       <publishTime>08/22/2016 22:36:39</publishTime>
     </File>
+    <File Include="Views/Index/CreateSchedule.cshtml">
+      <publishTime>08/31/2016 23:27:21</publishTime>
+    </File>
     <File Include="Views/Index/CreateURL.cshtml">
       <publishTime>08/22/2016 22:36:39</publishTime>
     </File>
@@ -679,7 +685,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/22/2016 22:36:39</publishTime>
     </File>
     <File Include="Views/Index/Detail.cshtml">
-      <publishTime>08/26/2016 23:41:23</publishTime>
+      <publishTime>09/01/2016 00:18:53</publishTime>
     </File>
     <File Include="Views/Index/DetailCategory.cshtml">
       <publishTime>08/22/2016 22:36:39</publishTime>
@@ -719,6 +725,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Index/List.cshtml">
       <publishTime>08/26/2016 23:16:11</publishTime>
+    </File>
+    <File Include="Views/Index/ScheduleDetail.cshtml">
+      <publishTime>09/01/2016 00:09:43</publishTime>
+    </File>
+    <File Include="Views/Index/ScheduleList.cshtml">
+      <publishTime>09/03/2016 17:03:31</publishTime>
     </File>
     <File Include="Views/Index/Search.cshtml">
       <publishTime>08/22/2016 22:36:39</publishTime>

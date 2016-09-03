@@ -327,6 +327,7 @@
     <Content Include="Scripts\Utils.js" />
     <Content Include="Scripts\validator.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Templates\URLTemplate.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -442,24 +443,14 @@
     <Content Include="Views\City\Details.cshtml" />
     <Content Include="Views\City\Edit.cshtml" />
     <Content Include="Views\City\Index.cshtml" />
-    <Content Include="Views\Index\CampaignDetail.cshtml" />
     <Content Include="Views\Index\List.cshtml" />
-    <Content Include="Views\Index\CategoryDetail.cshtml" />
-    <Content Include="Views\Index\CategoryList.cshtml" />
-    <Content Include="Views\Index\CreateCategory.cshtml" />
-    <Content Include="Views\Index\CreateKeyword.cshtml" />
     <Content Include="Views\Index\CreateLink.cshtml" />
     <Content Include="Views\Index\CreateURL.cshtml" />
     <Content Include="Views\Index\Delete.cshtml" />
-    <Content Include="Views\Index\DeleteCategory.cshtml" />
-    <Content Include="Views\Index\DeleteKeyword.cshtml" />
-    <Content Include="Views\Index\DeleteLink.cshtml" />
     <Content Include="Views\Index\DetailCategory.cshtml" />
     <Content Include="Views\Index\DetailLink.cshtml" />
     <Content Include="Views\Index\Detail.cshtml" />
     <Content Include="Views\Index\Edit.cshtml" />
-    <Content Include="Views\Index\EditCategory.cshtml" />
-    <Content Include="Views\Index\EditKeyword.cshtml" />
     <Content Include="Views\Index\EditLink.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Index\KeywordDetail.cshtml" />
@@ -471,6 +462,9 @@
     <Content Include="Views\Index\Analyse.cshtml" />
     <Content Include="Views\Index\Create.cshtml" />
     <Content Include="Views\Index\DetechURL.cshtml" />
+    <Content Include="Views\Index\CreateSchedule.cshtml" />
+    <Content Include="Views\Index\ScheduleList.cshtml" />
+    <Content Include="Views\Index\ScheduleDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

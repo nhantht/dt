@@ -126,6 +126,19 @@
           <Property Name="CurrencyId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Price" Type="numeric" Precision="18" Scale="5" Nullable="false" />
         </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Hour" Type="smallint" Nullable="false" />
+          <Property Name="Minute" Type="smallint" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Statuses">
           <Key>
             <PropertyRef Name="StatusId" />
@@ -612,6 +625,7 @@ warning 6002: The table/view 'demo_restophohoi_com_db.dbo.View_Users' does not h
           <EntitySet Name="Links" EntityType="Self.Links" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NegativeMarchs" EntityType="Self.NegativeMarchs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriceURL" EntityType="Self.PriceURL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
@@ -919,6 +933,7 @@ warning 6002: The table/view 'demo_restophohoi_com_db.dbo.View_Users' does not h
             <End Role="User" EntitySet="Users" />
             <End Role="Link" EntitySet="Links" />
           </AssociationSet>
+          <EntitySet Name="Schedules" EntityType="dtModel.Schedule" />
           </EntityContainer>
         <ComplexType Name="SP_GetURLAllDevices_Result">
           <Property Type="Decimal" Name="DeviceId" Nullable="false" Precision="18" Scale="0" />
@@ -1491,6 +1506,19 @@ warning 6002: The table/view 'demo_restophohoi_com_db.dbo.View_Users' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FilePath" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Hour" Type="Int16" Nullable="false" />
+          <Property Name="Minute" Type="Int16" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1832,6 +1860,20 @@ warning 6002: The table/view 'demo_restophohoi_com_db.dbo.View_Users' does not h
                 <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="dtModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Minute" ColumnName="Minute" />
+                <ScalarProperty Name="Hour" ColumnName="Hour" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

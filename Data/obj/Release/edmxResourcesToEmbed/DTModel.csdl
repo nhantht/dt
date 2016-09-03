@@ -157,6 +157,7 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Link" EntitySet="Links" />
     </AssociationSet>
+    <EntitySet Name="Schedules" EntityType="dtModel.Schedule" />
   </EntityContainer>
   <ComplexType Name="SP_GetURLAllDevices_Result">
     <Property Type="Decimal" Name="DeviceId" Nullable="false" Precision="18" Scale="0" />
@@ -729,4 +730,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Schedule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FilePath" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Hour" Type="Int16" Nullable="false" />
+    <Property Name="Minute" Type="Int16" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
 </Schema>

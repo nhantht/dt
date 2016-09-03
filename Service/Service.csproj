@@ -73,6 +73,7 @@
     <Compile Include="BaseData\TimeFrame.cs" />
     <Compile Include="BaseData\DeviceType.cs" />
     <Compile Include="BaseData\Currency.cs" />
+    <Compile Include="Index\Schedule.cs" />
     <Compile Include="Index\Link.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Region\City.cs" />

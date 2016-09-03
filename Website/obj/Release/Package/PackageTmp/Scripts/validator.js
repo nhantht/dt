@@ -19,12 +19,21 @@
         }
         return true;
     },
-    addMessage:function(message){
+    checkRangeNumeric: function (id, message, from, to) {
+        if (parseInt($("#" + id).val()) < from
+            || parseInt($("#" + id).val()) > to) {
+            this.addMessage(message);
+            $("#" + id).focus();
+            return false;
+        }
+        return true;
+    },
+    addMessage: function (message) {
         var li = document.createElement("li");
         $(li).text(message);
         $("#" + this.settings.messagePanelId).children().first().append(li);
     },
-    clearMessages:function(){
+    clearMessages: function () {
         $("#" + this.settings.messagePanelId).children().first().find("li").remove();
     },
     hasErrors: function () {

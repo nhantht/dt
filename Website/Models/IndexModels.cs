@@ -55,4 +55,39 @@ namespace Website.Models
 
         public string Message { get; set; }
     }
+    public class ScheduleDetailModel
+    {
+        [Key]
+        [Display(Name = "Code")]
+        public decimal Id { get; set; }
+
+        [Display(Name = "URL")]
+        [Required(ErrorMessage = "File Path is required!")]
+        [MaxLength(200)]
+        public string FilePath { get; set; }
+
+        [MaxLength(15)]
+        public string UserId { get; set; }
+
+        [Required(ErrorMessage = "Hour is required!")]
+        [Display(Name = "Hour")]
+        public short Hour { get; set; }
+
+        [Required(ErrorMessage = "Minute is required!")]
+        [Display(Name = "Minute")]
+        public short Minute { get; set; }
+
+        [Display(Name = "Active?")]
+        public bool Active { get; set; }
+
+        [Display(Name = "Created Date")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy HH:mm:ss}")]
+        public System.DateTime CreatedDate { get; set; }
+
+        [Display(Name = "Updated Date")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy HH:mm:ss}")]
+        public System.DateTime UpdatedDate { get; set; }
+
+        public string Message { get; set; }
+    }
 }
