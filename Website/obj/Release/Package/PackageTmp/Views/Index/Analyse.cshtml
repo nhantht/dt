@@ -65,7 +65,7 @@
         Util.Layout.showLoading();
         $.ajax({
             type: "post",
-            url: "create",
+            url: "Accept",
             data: { model: { URL: url, Price: price, Title: title, UnanalysedPicture: true, ShortDescription: shortDescription, Picture: picture, IsOverride: $("#IsOverride").prop("checked") } },
             success: function (response) {
                 if (response.Message.length == 0) {

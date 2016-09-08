@@ -25,6 +25,23 @@ namespace Service.Index
                     select u
             ).ToList();
         }
+        public string RunSchedules(string userId)
+        {
+            string message = string.Empty;
+            DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            List<Data.Schedule> list = (from x in db.Schedules
+                                        orderby x.CreatedDate
+                                        where x.Active
+                                        && (x.UpdatedDate == null
+                                            || x.UpdatedDate != today)
+                                        select x).ToList();
+
+            foreach (Data.Schedule schedule in list)
+            {
+                message = RunSchedule(schedule.Id, userId);
+            }
+            return message;
+        }
         public string RunSchedule(decimal id, string userId)
         {
             Link linkObj = new Link();
@@ -50,68 +67,78 @@ namespace Service.Index
                 return "The structure is wrong";
             }
             Data.Link link = new Data.Link();
-            int i = 2;
+            int i = 1;
             foreach (XmlNode node in root[0].ChildNodes)
             {
                 link = new Data.Link();
                 link.CreatedDate = DateTime.Now;
                 link.UserId = userId;
-                //URL
-                if (!string.IsNullOrEmpty(node.ChildNodes[0].InnerText))
+                try
                 {
-                    link.URL = node.ChildNodes[0].InnerText;
-                    //Title
-                    if (!string.IsNullOrEmpty(node.ChildNodes[1].InnerText))
-                    {
-                        link.Title = node.ChildNodes[2].InnerText;
-                    }
-                    else
-                    {
-                        link.Title = string.Empty;
-                    }
-                    //ShortDescription
-                    if (!string.IsNullOrEmpty(node.ChildNodes[2].InnerText))
-                    {
-                        link.ShortDescription = node.ChildNodes[2].InnerText;
-                    }
-                    else
-                    {
-                        link.ShortDescription = string.Empty;
-                    }
-                    //Picture
-                    if (!string.IsNullOrEmpty(node.ChildNodes[3].InnerText))
-                    {
-                        link.Picture = node.ChildNodes[3].InnerText;
-                    }
                     //URL
-                    if (!string.IsNullOrEmpty(node.ChildNodes[4].InnerText))
+                    if (!string.IsNullOrEmpty(node.ChildNodes[0].InnerText))
                     {
-                        link.Price = float.Parse(node.ChildNodes[4].InnerText);
+                        link.URL = node.ChildNodes[0].InnerText;
+                        //Title
+                        if (!string.IsNullOrEmpty(node.ChildNodes[1].InnerText))
+                        {
+                            link.Title = node.ChildNodes[2].InnerText;
+                        }
+                        else
+                        {
+                            link.Title = string.Empty;
+                        }
+                        //ShortDescription
+                        if (!string.IsNullOrEmpty(node.ChildNodes[2].InnerText))
+                        {
+                            link.ShortDescription = node.ChildNodes[2].InnerText;
+                        }
+                        else
+                        {
+                            link.ShortDescription = string.Empty;
+                        }
+                        //Picture
+                        if (!string.IsNullOrEmpty(node.ChildNodes[3].InnerText))
+                        {
+                            link.Picture = node.ChildNodes[3].InnerText;
+                        }
+                        //URL
+                        if (!string.IsNullOrEmpty(node.ChildNodes[4].InnerText))
+                        {
+                            link.Price = float.Parse(node.ChildNodes[4].InnerText);
+                        }
+                    }
+                    Data.Link found = linkObj.GetByURL(link.URL);
+                    if (linkObj.GetByURL(link.URL) != null)
+                    {
+                        //Update
+                        link.Id = found.Id;
+                        if (linkObj.Update(link, true) == false)
+                        {
+                            AddErrorMessage(ref message, i);
+                        }
+                    }
+                    else
+                    {
+                        if (linkObj.Create(link, true) == false)
+                        {
+                            AddErrorMessage(ref message, i);
+                        }
                     }
                 }
-                Data.Link found = linkObj.GetByURL(link.URL);
-                if (linkObj.GetByURL(link.URL) != null)
+                catch
                 {
-                    //Update
-                    link.Id = found.Id;
-                    if (linkObj.Update(link, true) == false)
-                    {
-                        AddErrorMessage(ref message, i);
-                    }
-                }
-                else
-                {
-                    if (linkObj.Create(link, true) == false)
-                    {
-                        AddErrorMessage(ref message, i);
-                    }
+                    AddErrorMessage(ref message, i);
                 }
                 i++;
             }
             if (message.Length > 0)
             {
-                message = "The following rows are invalid: " + message + ". \nPlease check again.";
+                message = "The following links are invalid: " + message + ". \nPlease check again.";
             }
+            list[0].ErrorMessage = message;
+            list[0].UpdatedDate = DateTime.Now;
+            db.SaveChanges();
             //Clean
             doc = null;
             return message;

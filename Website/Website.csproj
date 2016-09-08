@@ -274,6 +274,8 @@
     <Content Include="Images\edit.png" />
     <Content Include="Images\error.png" />
     <Content Include="Images\icon-right-arrow.png" />
+    <Content Include="Images\Icons\light-star.png" />
+    <Content Include="Images\Icons\star.png" />
     <Content Include="Images\line.png" />
     <Content Include="Images\Mau da\dong song-mini.jpg" />
     <Content Include="Images\Mau da\dong song.jpg" />
@@ -566,7 +568,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2603</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:2603/</IISUrl>
+          <IISUrl>http://localhost:2604/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

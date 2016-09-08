@@ -1,96 +1,283 @@
-﻿@{
+﻿@model Website.Models.SearchResult
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> priceOrderList = new List<SelectListItem>();
+    priceOrderList.Add(new SelectListItem
+    {
+        Text = "Relevant",
+        Value = "1"
+    });
+    priceOrderList.Add(new SelectListItem
+    {
+        Text = "Low - High",
+        Value = "2",
+        Selected = true
+    });
+    priceOrderList.Add(new SelectListItem
+    {
+        Text = "High - Low",
+        Value = "3"
+    });
+    Service.ADV.Currency currencyObj = new Service.ADV.Currency();
+    List<SelectListItem> currencyList = (from x in currencyObj.GetList()
+                                         select new SelectListItem
+                                         {
+                                             Text = x.Name,
+                                             Value = x.Code
+                                         }).ToList();
 }
+
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 1em;
+        line-height: 2;
+    }
+
+    .page-header {
+        background-color: whitesmoke;
+        height: 55px;
+    }
+
+    .logo {
+        height: 49px;
+        width: 49px;
+    }
+
+    #searchBox {
+        display: inline-block;
+        position: relative;
+        top: -8px;
+    }
+
+    .search-text {
+        width: 600px;
+    }
+
+    .search-section {
+        width: 100%;
+    }
+
+    .adv-container {
+        width: 100%;
+        position: fixed;
+        height: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .select-no-border {
+        border: none;
+    }
+
+    .title {
+        font-weight: bold;
+    }
+
+    .url-title {
+        color: #253E7C;
+        font-size: 1.2em;
+    }
+
+    .relative-search-title {
+        color: gray;
+        font-size: 1.2em;
+    }
+
+    .relative-search {
+        color: #253E7C;
+    }
+
+    a {
+        color: darkgreen;
+    }
+
+    .short-description {
+    }
+
+    .price {
+        color: #DAC09D;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .padding-content {
+        text-align: left;
+        padding-left: 71px;
+        padding-right: 71px;
+    }
+
+    .blur-text {
+        color: gray;
+    }
+
+    .start-icon {
+        width: 15px;
+        position: relative;
+        top: -3px;
+    }
+
+    .adv-picture {
+        width: 44%;
+    }
+
+    input[type="number"] {
+        height: 30px;
+    }
+</style>
+<table id="searchBox">
+    <tr>
+        <td><img src="../images/logo.png" class="logo"></td>
+        <td>
+            @Html.EditorFor(model => model.Keyword, new { htmlAttributes = new { id = "txtSearch", maxlength = 200, @class = "search-text form-control", placeholder = "Please enter your keyword to search." } })
+        </td>
+        <td class="search-button-container">
+            <input type="button" class="search-button" onclick="search();" value="" tabindex="0" name="go">
+        </td>
+    </tr>
+</table>
 <div class="container-fluid">
-    <table class="search-section" border="0">
-        <tr>
-            <td colspan="2">
-                <img src="../images/logo.png" class="logo home-logo" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.TextBox("txtSearch", string.Empty, new { maxlength = 200, @class = "search-text form-control", placeholder = string.Empty })
-            </td>
-            <td class="search-button-container">
-                <input type="button" class="search-button" id="btnSearch" value="" tabindex="0" name="go">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div class="pull-left">
-                    <span>Filter standard: </span>
-                    Price from <input type="number" style="width:50px;" /> to <input type="number" style="width:50px" />
-                    <span style="color:green"> and </span>
-                    <select style="height:25px">
-                        <option value="USD" selected>USD</option>
-                        <option>VND</option>
-                    </select>
+    <div class="row">
+        <div class="col-md-12 padding-content">
+            <span class="title">Price: </span>
+            @Html.DropDownListFor(model => model.PriceOrder, priceOrderList, "-- Select Order --", new { htmlAttributes = new { id = "priceOrder" } })
+            @*<select style="height:25px" id="lstPriceOrder" class="select-no-border">
+                    <option value="1" selected>Relevant</option>
+                    <option value="2">Low - High</option>
+                    <option value="3">High - Low</option>
+                </select>*@
+            <span class="title" style="padding-left:20px">Price Range: </span>
+            @Html.EditorFor(model => model.FromPrice, new { htmlAttributes = new { id = "fromPrice", style = "width:80px;", type = "number" } })
+            -
+            @Html.EditorFor(model => model.ToPrice, new { htmlAttributes = new { id = "toPrice", style = "width:80px;", type = "number" } })
+            <span class="title" style="padding-left:20px">Unit: </span>
+            @Html.DropDownListFor(model => model.Currency, currencyList, null, new { htmlAttributes = new { id = "lstCurrency", style = "height:25px", @class = "select-no-border" } })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 padding-content">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 padding-content">
+            <div class="blur-text">About <span id="resultNumber">@Model.Links.Count</span> results</div>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6" style="text-align:left;padding-left:71px">
+            @foreach (Website.Models.IndexDetailModel link in Model.Links)
+            {
+                <table class="search-section" border="0">
+                    <tr>
+                        <td colspan="2" style="text-align:left">
+                            <div style="display:inline-block;">
+                                <div class="url-title">@link.Title</div>
+                                <div><a href="@link.URL">@link.URL</a></div>
+                                <div class="blur-text">
+                                    @for (int i = 1; i <= Math.Round(link.Rating); i++)
+                                    {
+                                        <img src="~/Images/Icons/light-star.png" class="start-icon" />
+                                    }
+                                    @for (int i = 1; i <= (5 - Math.Round(link.Rating)); i++)
+                                    {
+                                        <img src="~/Images/Icons/star.png" class="start-icon" />
+                                    }
+                                    <span>Rating: <span>@link.Rating</span></span> - <span>@link.Reviews</span> reviews
+                                </div>
+                                <div class="short-description">@link.ShortDescription</div>
+                                <div class="pull-right">
+                                    <span class="price">$@link.Price</span>
+                                </div>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="">
+                                        <span style="display:inline-block">Reason: </span>
+                                        <input type="text" class="form-control" style="width:200px;display:inline-block" />
+                                        <button class="btn btn-primary" value="Report Error">Report Error</button>
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            }
+            <br />
+            @if (Model.RelativeKeywords.Count > 0)
+            {
+                <span class="relative-search-title">Searches related to @Model.Keyword</span>
+            }
+            @{
+                string cell1Value = string.Empty;
+                string cell2Value = string.Empty;
+            }
+            @for (int i = 0; i < Model.RelativeKeywords.Count; i++)
+            {
+                cell1Value = Model.RelativeKeywords[i].Keyword;
+                i++;
+                cell2Value = string.Empty;
+                if (i < Model.RelativeKeywords.Count)
+                {
+                    cell2Value = Model.RelativeKeywords[i].Keyword;
+                }
+                <div class="row" style="width:400px">
+                    <div class="col-md-6"><a href="#" class="relative-search">@cell1Value</a></div>
+                    <div class="col-md-6"><a href="#" class="relative-search">@cell2Value</a></div>
                 </div>
-                <div class="pull-right" style="height:20px">
-                    <a>The higest price</a> |
-                    <a>The lowest price</a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align:left">
-                <hr />
-                <div style="display:inline-block;">
-                    <div>
-                        <div style="display:inline-block;vertical-align:top">
-                            <img src="https://images-na.ssl-images-amazon.com/images/I/416TS-ODxfL._AC_US160_.jpg" />
-                        </div>
-                        <div style="display:inline-block;width:75%">
-                            <div><a href="https://www.amazon.com/BLU-R1-HD-Exclusive-Lockscreen/dp/B01H2E0J5M/ref=sr_1_4?ie=UTF8&qid=1468341278&sr=8-4&keywords=phone">BLU R1 HD - 16 GB - Black - Prime Exclusive - with Lockscreen Offers & Ads</a></div>
-                            <div><a href="https://www.amazon.com/BLU-R1-HD-Exclusive-Lockscreen/dp/B01H2E0J5M/ref=sr_1_4?ie=UTF8&qid=1468341278&sr=8-4&keywords=phone">https://www.amazon.com/BLU-R1-HD-Exclusive-Lockscreen/dp/B01H2E0J5M/ref=sr_1_4?ie=UTF8&qid=1468341278&sr=8-4&keywords=phone</a></div>
-                            <div>By LXLG</div>
-                            <div>
-                                <span style="color:green">32 Views</span>
-                            </div>
-                            <div>
-                                <span>Price: </span>
-                                <span style="color:red">$109.99</span>
-                            </div>
-                            <div style="color:silver">Fast 1.3 GHz quad-core MediaTek 6735 ARM Cortex processor with 16 GB Internal memory and 2 GB RAM</div>
-                            <div class="">
-                                <hr />
-                                <span style="display:inline-block">Reason: </span>
-                                <input type="text" class="form-control" style="width:200px;display:inline-block" />
-                                <button class="btn btn-primary" value="Report Error">Report Error</button>
-                            </div>
+            }
+        </div>
+        <div class="col-md-6" style="text-align:left">
+            <div class="adv-container">
+                @for (int k = 0; k < 10; k++)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="~/Images/Mau da/gach 1.jpg" class="adv-picture" />
                         </div>
                     </div>
-                    <hr />
-                    <div>
-                        <div style="display:inline-block;vertical-align:top">
-                            <img src="https://images-na.ssl-images-amazon.com/images/I/416TS-ODxfL._AC_US160_.jpg" />
-                        </div>
-                        <div style="display:inline-block;width:75%">
-                            <div><a href="https://www.amazon.com/BLU-R1-HD-Exclusive-Lockscreen/dp/B01H2E0J5M/ref=sr_1_4?ie=UTF8&qid=1468341278&sr=8-4&keywords=phone">BLU R1 HD - 16 GB - Black - Prime Exclusive - with Lockscreen Offers & Ads</a></div>
-                            <div><a href="https://www.amazon.com/BLU-R1-HD-Exclusive-Lockscreen/dp/B01H2E0J5M/ref=sr_1_4?ie=UTF8&qid=1468341278&sr=8-4&keywords=phone">https://www.amazon.com/BLU-R1-HD-Exclusive-Lockscreen/dp/B01H2E0J5M/ref=sr_1_4?ie=UTF8&qid=1468341278&sr=8-4&keywords=phone</a></div>
-                            <div>By LXLG</div>
-                            <div>
-                                <span style="color:green">32 Views</span>
-                            </div>
-                            <div>
-                                <span>Price: </span>
-                                <span style="color:red">$109.99</span>
-                            </div>
-                            <div style="color:silver">Fast 1.3 GHz quad-core MediaTek 6735 ARM Cortex processor with 16 GB Internal memory and 2 GB RAM</div>
-                            <div class="">
-                                <hr />
-                                <span style="display:inline-block">Reason: </span>
-                                <input type="text" class="form-control" style="width:200px;display:inline-block" />
-                                <button class="btn btn-primary" value="Report Error">Report Error</button>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="search-section" border="0">
+                                <tr>
+                                    <td colspan="2" style="text-align:left">
+                                        <div style="display:inline-block;">
+                                            <div class="url-title">BLU R1 HD - 16 GB - Black - Prime Exclusive - with Lockscreen Offers & Ads</div>
+                                            <div><a href="https://www.amazon.com/BLU-R1-HD-Exclusive-Lockscreen/dp/B01H2E0J5M/ref=sr_1_4?ie=UTF8&qid=1468341278&sr=8-4&keywords=phone">https://www.amazon.com/BLU-R1-HD-Exclusive-Lockscreen/dp/B01H2E0J5M/ref=sr_1_4?ie=UTF8&qid=1468341278&sr=8-4&keywords=phone</a></div>
+                                            <div class="blur-text">
+                                                @for (int i = 1; i <= 4; i++)
+                                                {
+                                                    <img src="~/Images/Icons/light-star.png" class="start-icon" />
+                                                }
+                                                @for (int i = 1; i <= 1; i++)
+                                                {
+                                                    <img src="~/Images/Icons/star.png" class="start-icon" />
+                                                }
+                                                <span>Rating: <span>3.8</span></span> - <span>32</span> reviews
+                                            </div>
+                                            <div class="short-description">Đã hết hạn nghỉ phép một tháng để trị bệnh gout nhưng nguyên Phó chủ tịch Hậu Giang Trịnh Xuân Thanh vẫn chưa đi làm lại, khi ông đang là Tỉnh ủy viên, sinh</div>
+                                            <div class="pull-right">
+                                                <span class="price">$109.99</span>
+                                            </div>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <div class="">
+                                                    <span style="display:inline-block">Reason: </span>
+                                                    <input type="text" class="form-control" style="width:200px;display:inline-block" />
+                                                    <button class="btn btn-primary" value="Report Error">Report Error</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
                         </div>
                     </div>
-                </div>
-                @*<div style="display:inline-block;vertical-align:top">Advertisement</div>*@
-            </td>
-        </tr>
-    </table>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     $(document).ready(function () {
@@ -100,5 +287,33 @@
         });
         $("#logoContainer").remove();
         $(".middle-content").removeClass("middle-content");
+
+        $("#searchBox").insertBefore($(".page-header").children().first());
+        $(".search-section").width($(".search-section").width() - ($(".logo").width() * 2) - 18);
     });
+    function search() {
+        //Keyword
+        var keyword = $("#txtSearch").val().trim();
+        //Price order
+        var priceOrder = $("#PriceOrder").val();
+        //Price range
+        var fromPrice = $("#fromPrice").val();
+        var toPrice = $("#toPrice").val();
+        //Currency
+        var currency = $("#Currency").val();
+
+        if (keyword.length == 0) {
+            $("#txtSearch").focus();
+            return false;
+        } else {
+            var location = "search?keyword=" + keyword + "&priceOrder=" + priceOrder + "&currency=" + currency;
+            if ($.trim(fromPrice).length > 0) {
+                location += "&fromPrice=" + fromPrice;
+            }
+            if ($.trim(toPrice).length > 0) {
+                location += "&toPrice=" + toPrice;
+            }
+            document.location = location;
+        }
+    }
 </script>

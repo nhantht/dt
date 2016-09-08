@@ -102,6 +102,8 @@
     <Property Name="UserId" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="Price" Type="float" />
+    <Property Name="Reviews" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Rating" Type="numeric" Precision="1" Scale="1" Nullable="false" />
   </EntityType>
   <EntityType Name="NegativeMarchs">
     <Key>
@@ -132,7 +134,8 @@
     <Property Name="Minute" Type="smallint" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedDate" Type="date" />
+    <Property Name="ErrorMessage" Type="nvarchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="Statuses">
     <Key>

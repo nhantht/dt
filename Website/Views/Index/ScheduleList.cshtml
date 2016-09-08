@@ -21,6 +21,9 @@
         <th class="text-center" style="width:250px">
             @Html.DisplayNameFor(model => model.FirstOrDefault().CreatedDate)
         </th>
+        <th class="text-center" style="width:150px">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().UpdatedDate)
+        </th>
         <th class="text-center" style="width:100px">
 
         </th>
@@ -54,7 +57,14 @@
                 @Html.DisplayFor(modelItem => item.CreatedDate)
             </td>
             <td class="text-center">
+                @Html.DisplayFor(modelItem => item.UpdatedDate)
+            </td>
+            <td class="text-center">
                 <a href="javascript:runSchedule(@item.Id)">Run</a>
+                @if (item.ErrorMessage != null && item.ErrorMessage.Length > 0)
+                {
+                    <img src="~/Images/error.png" class="index-error" title="@item.ErrorMessage" style="width:20px" />
+                }
             </td>
         </tr>
     }
@@ -65,6 +75,7 @@
         Index.settings.page = @Model.PageNumber;
     });
     function runSchedule(id){
+        var that = this;
         Util.Layout.showLoading();
         $.ajax({
             type:"post",
@@ -78,6 +89,8 @@
                     alert("Successful!");
                 }
                 Util.Layout.hideLoading();
+                //Reload
+                Index.loadScheduleList(Index.settings.page);
             },error:function(){
                 Util.Layout.hideLoading();
             }

@@ -15,6 +15,13 @@ namespace Admin.Controllers
             //HtmlDocument doc = new HtmlDocument();
             //doc.LoadHtml(html);
             //doc.GetElementbyId("")
+            if (User.Identity.IsAuthenticated)
+            {
+                Service.Index.Schedule schedule = new Service.Index.Schedule();
+                schedule.RunSchedules(User.Identity.Name);
+                //Clean
+                schedule = null;
+            }
             return View();
         }
 

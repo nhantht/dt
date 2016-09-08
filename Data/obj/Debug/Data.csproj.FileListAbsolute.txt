@@ -35,6 +35,6 @@ D:\Project\DT\Source\Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xm
 D:\Project\DT\Source\Data\bin\Debug\Microsoft.Owin.xml
 D:\Project\DT\Source\Data\bin\Debug\Microsoft.Owin.Security.xml
 D:\Project\DT\Source\Data\bin\Debug\System.Web.Mvc.xml
-D:\Project\DT\Source\Data\obj\Debug\Data.csprojResolveAssemblyReference.cache
 D:\Project\DT\Source\Data\obj\Debug\Data.dll
 D:\Project\DT\Source\Data\obj\Debug\Data.pdb
+D:\Project\DT\Source\Data\obj\Debug\Data.csprojResolveAssemblyReference.cache

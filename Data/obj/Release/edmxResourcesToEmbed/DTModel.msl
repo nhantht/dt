@@ -343,6 +343,7 @@
     <EntitySetMapping Name="Schedules">
       <EntityTypeMapping TypeName="dtModel.Schedule">
         <MappingFragment StoreEntitySet="Schedule">
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
           <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="Active" ColumnName="Active" />

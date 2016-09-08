@@ -268,7 +268,7 @@ namespace Website.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter a keyword for search.
+        ///   Looks up a localized string similar to Enter a Keyword for search.
         /// </summary>
         public static string DefaultSearchText {
             get {

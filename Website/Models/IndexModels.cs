@@ -53,6 +53,14 @@ namespace Website.Models
         [MaxLength(200)]
         public string Picture { get; set; }
 
+        [Display(Name = "Rating")]
+        [DisplayFormat(DataFormatString = "{0:n1}")]
+        public decimal Rating { get; set; }
+
+        [Display(Description = "Reviews")]
+        [DisplayFormat(DataFormatString = "{0:n0}")]
+        public decimal Reviews { get; set; }
+
         public string Message { get; set; }
     }
     public class ScheduleDetailModel
@@ -84,10 +92,11 @@ namespace Website.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy HH:mm:ss}")]
         public System.DateTime CreatedDate { get; set; }
 
-        [Display(Name = "Updated Date")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy HH:mm:ss}")]
-        public System.DateTime UpdatedDate { get; set; }
+        [Display(Name = "Last Run Date")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public System.DateTime? UpdatedDate { get; set; }
 
         public string Message { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

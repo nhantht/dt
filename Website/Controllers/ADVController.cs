@@ -8,6 +8,7 @@ using System.IO;
 using System.Net;
 using HtmlAgilityPack;
 using System.Text;
+using Website.Models;
 
 namespace Website.Controllers
 {
@@ -16,6 +17,7 @@ namespace Website.Controllers
         Service.ADV.Campaign campaign = new Service.ADV.Campaign();
         Service.ADV.Category category = new Service.ADV.Category();
         Service.ADV.URL URL = new Service.ADV.URL();
+        Service.Index.Link linkObj = new Service.Index.Link();
         Service.ADV.Keyword keyword = new Service.ADV.Keyword();
         [Authorize]
         public ActionResult Index()
@@ -52,9 +54,57 @@ namespace Website.Controllers
             });
             return View();
         }
-        public ActionResult Search()
+        public ActionResult Search(string keyword, string priceOrder, string fromPrice, string toPrice, string currency)
         {
-            return View();
+            SearchResult result = new SearchResult();
+            Service.ADV.Keyword keywordObj = new Service.ADV.Keyword();
+            result.Links = new List<IndexDetailModel>();
+            result.RelativeKeywords = new List<KeywordListViewModels>();
+            result.URLs = new List<DetailURLViewModels>();
+
+            if (priceOrder == null)
+            {
+                priceOrder = "1";
+            }
+            if (currency == null)
+            {
+                currency = "VND";
+            }
+
+            result.Keyword = keyword;
+            result.PriceOrder = int.Parse(priceOrder);
+            result.FromPrice = fromPrice;
+            result.ToPrice = toPrice;
+            result.Currency = currency;
+
+            if (string.IsNullOrEmpty(keyword) == false)
+            {
+                string[] keywords = keyword.Split(new string[]{" "}, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string key in keywords.ToList())
+                {
+                    result.RelativeKeywords.AddRange(from u in keywordObj.GetListByKeyword(key)
+                                                     select new Models.KeywordListViewModels
+                                                               {
+                                                                   Keyword = u.Keyword1
+                                                               });
+                    result.Links.AddRange(from u in linkObj.GetByKeyword(key, priceOrder, fromPrice, toPrice, currency)
+                                          select new Models.IndexDetailModel
+                                                    {
+                                                        Id = u.Id,
+                                                        Title = u.Title,
+                                                        ShortDescription = u.ShortDescription,
+                                                        Picture = u.Picture,
+                                                        CreatedDate = u.CreatedDate,
+                                                        URL = u.URL,
+                                                        Price = u.Price,
+                                                        Rating = u.Rating,
+                                                        Reviews = u.Reviews
+                                                    });
+                }
+                result.RelativeKeywords = result.RelativeKeywords.Distinct().ToList();
+                result.Links = result.Links.Distinct().ToList();
+            }
+            return View(result);
         }
         public ActionResult GetURLContent(string url)
         {

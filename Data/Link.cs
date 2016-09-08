@@ -22,6 +22,8 @@ namespace Data
         public string UserId { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<double> Price { get; set; }
+        public decimal Reviews { get; set; }
+        public decimal Rating { get; set; }
     
         public virtual User User { get; set; }
     }

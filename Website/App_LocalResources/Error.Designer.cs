@@ -133,7 +133,7 @@ namespace Website.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please delete the details relative to the keyword first..
+        ///   Looks up a localized string similar to Please delete the details relative to the Keyword first..
         /// </summary>
         public static string InuseKeyword {
             get {

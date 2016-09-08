@@ -92,6 +92,16 @@ namespace Service.ADV
 
             return Keywords;
         }
+        public IEnumerable<Data.Keyword> GetListByKeyword(string keyword)
+        {
+            IEnumerable<Data.Keyword> Keywords = from u in db.Keywords
+                                                 where 1 == 1
+                                                 && u.Keyword1.ToLower().Trim().IndexOf(keyword.Trim().ToLower()) >= 0
+                                                 orderby u.Keyword1
+                                                 select u;
+
+            return Keywords;
+        }
         public IEnumerable<Data.Device> GetDeviceList()
         {
             IEnumerable<Data.Device> devices = from u in db.Devices

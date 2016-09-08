@@ -147,7 +147,7 @@
             Util.Layout.showLoading();
             $.ajax({
                 type: "post",
-                data: { URL: $("#URL").val(), Budget: $("#Budget").val(), Title: $("#Title").val(), ShortDescription: $("#ShortDescription").val(), Price: $("#Price").val(), Picture: $(".adv-file").val() },
+                data: { URL: $("#URL").val().trim},
                 url: "index/create",
                 success: function (response) {
                     if (response.Message.length > 0) {
@@ -250,9 +250,6 @@
     validate: function () {
         Validator.clearMessages();
         Validator.checkRequired("URL", "You must enter URL.");
-        Validator.checkRequired("Title", "You must enter Title.");
-        Validator.checkRequired("ShortDescription", "You must enter Short Description.");
-        Validator.checkNumeric("Price", "Price is invalid. Price must be numeric and use a full stop (.) for decimals.");
 
         return !Validator.hasErrors();
     },

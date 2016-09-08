@@ -27,8 +27,42 @@ namespace Service.Index
         public Data.Link GetByURL(string URL)
         {
             return (from u in db.Links
-                    where (u.URL.Trim().ToLower()==URL.Trim().ToLower())
+                    where (u.URL.Trim().ToLower() == URL.Trim().ToLower())
                     select u).FirstOrDefault();
+        }
+        public IEnumerable<Data.Link> GetByKeyword(string keyword, string priceOrder, string fromPrice, string toPrice, string currency)
+        {
+            double price1 = 0;
+            double price2 = 0;
+            
+            if (!string.IsNullOrEmpty(fromPrice))
+                price1 = double.Parse(fromPrice);
+            if (!string.IsNullOrEmpty(toPrice))
+                price2 = double.Parse(toPrice);
+
+            IEnumerable<Data.Link> result = from u in db.Links
+                   where (u.URL.Trim().ToLower().IndexOf(keyword.Trim().ToLower()) >= 0
+                           || u.Title.Trim().ToLower().IndexOf(keyword.Trim().ToLower()) >= 0
+                           || u.ShortDescription.Trim().ToLower().IndexOf(keyword.Trim().ToLower()) >= 0)
+                           && (string.IsNullOrEmpty(fromPrice)
+                               || u.Price >= price1)
+                           && (string.IsNullOrEmpty(toPrice)
+                               || u.Price <= price2)
+                   select u;
+
+            if (int.Parse(priceOrder) == 2)
+            {
+                result = result.OrderBy(x => x.Price);
+            }
+            else
+            {
+                if (int.Parse(priceOrder) == 3)
+                {
+                    result = result.OrderByDescending(x => x.Price);
+                }
+            }
+
+            return result;
         }
         public bool CheckUnique(Data.Link link)
         {

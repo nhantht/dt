@@ -132,7 +132,8 @@
     <Property Name="Minute" Type="smallint" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedDate" Type="date" />
+    <Property Name="ErrorMessage" Type="nvarchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="Statuses">
     <Key>

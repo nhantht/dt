@@ -22,5 +22,6 @@ namespace Data
         public bool Active { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

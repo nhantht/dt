@@ -43,7 +43,7 @@ namespace Website.Controllers
             Models.ScheduleDetailModel result = (from u in schedule.GetList(id)
                                                  select new Models.ScheduleDetailModel
                                               {
-                                                  Id=u.Id,
+                                                  Id = u.Id,
                                                   FilePath = u.FilePath,
                                                   Hour = u.Hour,
                                                   Minute = u.Minute,
@@ -76,6 +76,11 @@ namespace Website.Controllers
         public ActionResult Search()
         {
             return View();
+        }
+        [Authorize]
+        public ActionResult GetURLContent(string url)
+        {
+            return Json(GetURLContent(url, string.Empty));
         }
         Models.IndexDetailModel GetURLContent(string url, string priceRule)
         {
@@ -209,6 +214,39 @@ namespace Website.Controllers
             try
             {
                 model.Message = string.Empty;
+                Models.IndexDetailModel analysed = GetURLContent(model.URL,string.Empty);
+                Data.Link data = new Data.Link
+                {
+                    URL = Uri.UnescapeDataString(model.URL),
+                    Picture = analysed.Picture == null ? string.Empty : Uri.UnescapeDataString(analysed.Picture),
+                    Title = analysed.Title == null ? string.Empty : analysed.Title,
+                    ShortDescription = analysed.ShortDescription == null ? string.Empty : analysed.ShortDescription,
+                    Price = analysed.Price,
+                    CreatedDate = DateTime.Now,
+                    UserId = User.Identity.Name
+                };
+                analysed = null;
+                if (link.Create(data, true) == false)
+                {
+                    model.Message = "URL was added by another";
+                }
+                //Clean
+                link = null;
+                return Json(model);
+            }
+            catch (Exception err)
+            {
+                model.Message = err.Message;
+                return Json(model);
+            }
+        }
+        [HttpPost]
+        [Authorize]
+        public ActionResult Accept(Models.IndexDetailModel model)
+        {
+            try
+            {
+                model.Message = string.Empty;
                 Data.Link data = new Data.Link
                 {
                     URL = Uri.UnescapeDataString(model.URL),
@@ -219,12 +257,21 @@ namespace Website.Controllers
                     CreatedDate = DateTime.Now,
                     UserId = User.Identity.Name
                 };
-
-                if (link.Create(data, model.UnanalysedPicture) == false)
+                Data.Link found = link.GetByURL(model.URL);
+                if (found == null)
                 {
+                    //Create
+                    if (link.Create(data, model.UnanalysedPicture) == false)
+                    {
+                        model.Message = "Please contact an administrator!";
+                    }
+                }
+                else
+                {
+                    //Update
                     if (model.IsOverride)
                     {
-                        data.Id = 0;
+                        data.Id = found.Id;
                         if (link.Update(data, model.UnanalysedPicture) == false)
                         {
                             model.Message = "Please contact an administrator!";
@@ -386,7 +433,9 @@ namespace Website.Controllers
                                                                      Hour = u.Hour,
                                                                      Minute = u.Minute,
                                                                      Active = u.Active,
-                                                                     CreatedDate = u.CreatedDate
+                                                                     CreatedDate = u.CreatedDate,
+                                                                     UpdatedDate = u.UpdatedDate,
+                                                                     ErrorMessage = u.ErrorMessage
                                                                  };
 
             int pageSize = 8;
