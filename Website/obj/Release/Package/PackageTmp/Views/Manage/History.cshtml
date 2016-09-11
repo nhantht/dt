@@ -1,52 +1,156 @@
-﻿<h2>History</h2>
-<div class="row">
-    <div class="col-md-4">
-        <h4>Account</h4>
-        <div>
-            <table class="table">
-                <tr>
-                    <th>Action</th>
-                    <th>Time</th>
-                </tr>
-                <tr>
-                    <td>Register</td>
-                    <td>2016-01-01 14:00:00</td>
-                </tr>
-                <tr>
-                    <td>Forget Password</td>
-                    <td>2016-01-01 16:00:00</td>
-                </tr>
-                <tr>
-                    <td>Change Password</td>
-                    <td>2016-01-01 16:02:00</td>
-                </tr>
-                <tr>
-                    <td>Block</td>
-                    <td>2016-02-01 16:02:00</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <h4>URLs</h4>
-        <div>
-            <table class="table">
-                <tr>
-                    <th>Action</th>
-                    <th>Time</th>
-                    <th>Description</th>
-                </tr>
-                <tr>
-                    <td>Register Campaign</td>
-                    <td>2016-02-01 16:02:00</td>
-                    <td>Autumn Campaign</td>
-                </tr>
-                <tr>
-                    <td>Block URL</td>
-                    <td>2016-02-01 16:02:00</td>
-                    <td>URL "Tivi 25 inch Asanzo 25S400 - Điện máy XANH" was blocked by Lan</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+﻿@model PagedList.IPagedList<Admin.Models.HistoryViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Action Records";
+    Service.User.Manage manageObj = new Service.User.Manage();
+    List<SelectListItem> actionList = (from x in manageObj.GetActionList()
+                                       select new SelectListItem()
+                                       {
+                                           Text = x.Name,
+                                           Value = x.Id.ToString(),
+                                           Selected = (ViewBag.ActionId != null && x.Id == int.Parse(ViewBag.ActionId))
+                                       }).ToList();
+
+    List<SelectListItem> userList = new List<SelectListItem>();
+    
+    (from x in manageObj.GetAllUsers()
+                                     select new SelectListItem()
+                                     {
+                                         Text = x.Phone,
+                                         Value = x.Phone,
+                                         Selected = (ViewBag.RelativeUser != null && x.Phone == ViewBag.RelativeUser)
+                                     }).ToList();
+    string optionLable = null;
+    if (User.Identity.Name == Lib.Common.Variables.AdminUser)
+    {
+        optionLable = "---Select---";
+        userList = (from x in manageObj.GetAllUsers()
+                    select new SelectListItem()
+                    {
+                        Text = x.Phone,
+                        Value = x.Phone,
+                        Selected = (ViewBag.RelativeUser != null && x.Phone == ViewBag.RelativeUser)
+                    }).ToList();
+    }
+    else {
+        userList.Add(new SelectListItem
+        {
+            Text = User.Identity.Name,
+            Value = User.Identity.Name,
+            Selected = true
+        });
+    }
+                                     
+    if (ViewBag.FromDate.ToString().Length == 0)
+    {
+        ViewBag.FromDate = DateTime.Now.ToString("MM/dd/yyyy");
+    }
+    if (ViewBag.ToDate.ToString().Length == 0)
+    {
+        ViewBag.ToDate = DateTime.Now.ToString("MM/dd/yyyy");
+    }
+}
+
+<h2>@ViewBag.Title</h2>
+<h4>Search</h4>
+<div style="width:900px">
+    <table>
+        <tr>
+            <td>From Date: </td>
+            <td>@Html.TextBox("datFromDate", null, new { @class = "datepicker", maxlength = 10, width = "100px" })</td>
+            <td>To Date: </td>
+            <td>@Html.TextBox("datToDate", null, new { @class = "datepicker", maxlength = 10, width = "100px" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.FirstOrDefault().ActionName): </td>
+            <td>@Html.DropDownListFor(m => m.FirstOrDefault().ActionId, actionList, optionLable, new { id = "lstStatus", style = "width:174px" })</td>
+            <td>@Html.DisplayNameFor(m => m.FirstOrDefault().RelativeUser): </td>
+            <td>@Html.DropDownListFor(m => m.FirstOrDefault().RelativeUser, userList, optionLable, new { id = "lstUser", style = "width:174px" })</td>
+            <td class="text-left">
+                <input type="button" id="btnSearch" value="Search" class="btn btn-primary" />
+            </td>
+        </tr>
+    </table>
+    <hr />
+    <table class="table">
+        <tr>
+            <th>
+                Action
+            </th>
+            <th class="text-center">
+                Noted Date
+            </th>
+            <th class="text-left">
+                Description
+            </th>
+            <th class="text-left">
+                Relative User
+            </th>
+            <th class="text-left">
+                Object
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActionName)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.NotedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RelativeUser)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Object)
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("history",
+    new { page, currentFilter = ViewBag.CurrentFilter }))
 </div>
+<script>
+    $(document).ready(function () {
+        $(".datepicker").datepicker();
+        //Set filters
+        setInitialDates();
+        //Events
+        $("#btnSearch").click(function () {
+            Util.Layout.showLoading(null);
+            setInitialDates();
+            var fromDate = $("#datFromDate").datepicker('getDate');
+            fromDate = (fromDate.getMonth() + 1) + "/" + fromDate.getDate() + "/" + fromDate.getFullYear();
+            var toDate = $("#datToDate").datepicker('getDate');
+            toDate = (toDate.getMonth() + 1) + "/" + toDate.getDate() + "/" + toDate.getFullYear();
+            var actionId = 0;
+            if ($("#lstStatus").val().length > 0) {
+                actionId = $("#lstStatus").val();
+            }
+            var userId = 0;
+            if ($("#lstUser").val().length > 0) {
+                userId = $("#lstUser").val();
+            }
+            var filterString = escape(actionId + "###" + fromDate + "###" + toDate + "###" + userId);
+            document.location = "history?currentFilter=" + filterString + "&page=1";
+        });
+    });
+    function setInitialDates() {
+        //Set filters
+        if ($("#datFromDate").val().trim().length == 0) {
+            $("#datFromDate").datepicker('setDate', '@ViewBag.FromDate');
+        }
+        if ($("#datToDate").val().trim().length == 0) {
+            $("#datToDate").datepicker('setDate', '@ViewBag.ToDate');
+        }
+    }
+</script>

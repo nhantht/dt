@@ -68,6 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionList.cs">
+      <DependentUpon>DTModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Campaign.cs">
       <DependentUpon>DTModel.tt</DependentUpon>
     </Compile>
@@ -106,6 +109,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DTModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Email.cs">
+      <DependentUpon>DTModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="History.cs">
+      <DependentUpon>DTModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Keyword.cs">
       <DependentUpon>DTModel.tt</DependentUpon>

@@ -467,6 +467,7 @@
     <Content Include="Views\Index\CreateSchedule.cshtml" />
     <Content Include="Views\Index\ScheduleList.cshtml" />
     <Content Include="Views\Index\ScheduleDetail.cshtml" />
+    <Content Include="Views\Manage\EmailAlerts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

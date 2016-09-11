@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Common\Application.cs" />
     <Compile Include="Common\Email.cs" />
+    <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\Models.cs" />
     <Compile Include="Common\Variables.cs" />
     <Compile Include="Security\Password.cs" />

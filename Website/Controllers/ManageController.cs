@@ -98,7 +98,7 @@ namespace Admin.Controllers
         public ActionResult Delete(string id)
         {
             id = Lib.Common.Application.UnescapePhone(id);
-            
+
             if (manage.Delete(id))
             {
                 return RedirectToAction("list");
@@ -145,9 +145,108 @@ namespace Admin.Controllers
             });
         }
         [Authorize]
-        public ActionResult History(string id)
+        public ActionResult History(string currentFilter, int page = 1)
         {
-            return View();
+            //Get filter data
+            if (currentFilter == null)
+            {
+                currentFilter = string.Empty;
+            }
+            string[] parts = System.Uri.UnescapeDataString(currentFilter).Split(new string[] { "###" }, StringSplitOptions.None);
+            string actionId = "0";
+            string fromDate = string.Empty;
+            string toDate = string.Empty;
+            string relativeUser = string.Empty;
+            if (parts.Length == 4)
+            {
+                //Set filters
+                actionId = parts[0].Trim();
+                fromDate = parts[1].Trim();
+                toDate = parts[2].Trim();
+                relativeUser = parts[3].Trim();
+            }
+            //Set viewbags
+            ViewBag.ActionId = actionId;
+            ViewBag.RelativeUser = relativeUser = string.Format("+{0}", relativeUser);
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
+
+            DateTime fromDate2 = DateTime.Parse(string.Format("{0} 00:00:00", fromDate));
+            DateTime toDate2 = DateTime.Parse(string.Format("{0} 23:59:59", toDate));
+
+            IEnumerable<HistoryViewModel> result = from s in manage.GetAllHistories()
+                                                   where (short.Parse(actionId) == 0 || s.ActionId == short.Parse(actionId))
+                                                      && (string.IsNullOrEmpty(fromDate) || s.NotedDate >= fromDate2)
+                                                      && (string.IsNullOrEmpty(toDate) || s.NotedDate <= toDate2)
+                                                      && (relativeUser == "+0" || s.CreatedUser == relativeUser)
+                                                   select new HistoryViewModel
+                                                      {
+                                                          ActionId = s.ActionId,
+                                                          ActionName = s.ActionList.Name,
+                                                          NotedDate = s.NotedDate,
+                                                          Description = s.Description,
+                                                          RelativeUser = s.CreatedUser,
+                                                          Object = s.Object
+                                                      };
+
+
+            int pageSize = 10;
+            ViewBag.CurrentFilter = Uri.EscapeDataString(string.Format("{0}###{1}###{2}###{3}", actionId, fromDate, toDate, relativeUser));
+
+            return View(result.ToPagedList(page, pageSize));
+        }
+        [Authorize]
+        public ActionResult EmailAlerts(string currentFilter, int page = 1)
+        {
+            //Get filter data
+            if (currentFilter == null)
+            {
+                currentFilter = string.Empty;
+            }
+            string[] parts = System.Uri.UnescapeDataString(currentFilter).Split(new string[] { "###" }, StringSplitOptions.None);
+            string actionId = "0";
+            string fromDate = string.Empty;
+            string toDate = string.Empty;
+            string relativeUser = string.Empty;
+            if (parts.Length == 4)
+            {
+                //Set filters
+                actionId = parts[0].Trim();
+                fromDate = parts[1].Trim();
+                toDate = parts[2].Trim();
+                relativeUser = parts[3].Trim();
+            }
+            //Set viewbags
+            ViewBag.ActionId = actionId;
+            ViewBag.RelativeUser = relativeUser = string.Format("+{0}", relativeUser);
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
+
+            DateTime fromDate2 = DateTime.Parse(string.Format("{0} 00:00:00", fromDate));
+            DateTime toDate2 = DateTime.Parse(string.Format("{0} 23:59:59", toDate));
+
+            IEnumerable<EmailViewModel> result = from s in manage.GetAllEmailAlerts()
+                                                 where (short.Parse(actionId) == 0 || s.ActionId == short.Parse(actionId))
+                                                    && (string.IsNullOrEmpty(fromDate) || s.NotedDate >= fromDate2)
+                                                    && (string.IsNullOrEmpty(toDate) || s.NotedDate <= toDate2)
+                                                    && (relativeUser == "+0" || s.RelativeUser == relativeUser)
+                                                 select new EmailViewModel
+                                                   {
+                                                       Id = s.Id,
+                                                       ActionId = s.ActionId,
+                                                       ActionName = s.ActionList.Name,
+                                                       NotedDate = s.NotedDate,
+                                                       Title = s.Title,
+                                                       ToEmail = s.ToEmail,
+                                                       RelativeUser = s.RelativeUser,
+                                                       Message = s.Message
+                                                   };
+
+
+            int pageSize = 10;
+            ViewBag.CurrentFilter = Uri.EscapeDataString(string.Format("{0}###{1}###{2}###{3}", actionId, fromDate, toDate, relativeUser));
+
+            return View(result.ToPagedList(page, pageSize));
         }
         [Authorize]
         [HttpPost]
@@ -289,7 +388,7 @@ namespace Admin.Controllers
             }
             return View(new ChangePasswordViewModel2
             {
-                Phone=user.Phone
+                Phone = user.Phone
             });
         }
         //
@@ -345,7 +444,7 @@ namespace Admin.Controllers
             {
                 return View(model);
             }
-            
+
             var crypto = new SimpleCrypto.PBKDF2();
             var encrypPass = crypto.Compute(model.NewPassword);
             if (manage.ChangePassword(model.Phone, encrypPass, crypto.Salt))

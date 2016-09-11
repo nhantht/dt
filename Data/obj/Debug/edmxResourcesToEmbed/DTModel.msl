@@ -357,5 +357,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ActionLists">
+      <EntityTypeMapping TypeName="dtModel.ActionList">
+        <MappingFragment StoreEntitySet="ActionList">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Histories">
+      <EntityTypeMapping TypeName="dtModel.History">
+        <MappingFragment StoreEntitySet="History">
+          <ScalarProperty Name="Object" ColumnName="Object" />
+          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="NotedDate" ColumnName="NotedDate" />
+          <ScalarProperty Name="ActionId" ColumnName="ActionId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Emails">
+      <EntityTypeMapping TypeName="dtModel.Email">
+        <MappingFragment StoreEntitySet="Emails">
+          <ScalarProperty Name="ActionId" ColumnName="ActionId" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ToEmail" ColumnName="ToEmail" />
+          <ScalarProperty Name="RelativeUser" ColumnName="RelativeUser" />
+          <ScalarProperty Name="NotedDate" ColumnName="NotedDate" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

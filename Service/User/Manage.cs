@@ -14,6 +14,24 @@ namespace Service.User
         {
             return from t in typeof(Data.User).GetFields() select t.Name;
         }
+        public bool ReportInvalidURL(string URL, string message, string userId)
+        {
+            db.Histories.Add(new Data.History
+            {
+                ActionId = (short)Lib.Common.Action.REPORTINVALIDURL,
+                Object = URL,
+                NotedDate = DateTime.Now,
+                CreatedUser = userId,
+                Description = message
+            });
+
+            db.SaveChanges();
+            return true;
+        }
+        public IEnumerable<Data.ActionList> GetActionList()
+        {
+            return db.ActionLists.OrderBy(x => x.Name);
+        }
         public bool ValidatePassword(string pass)
         {
             bool result = true;
@@ -160,6 +178,18 @@ namespace Service.User
         {
             return from u in db.Users
                    orderby u.CreatedDate descending
+                   select u;
+        }
+        public IEnumerable<Data.History> GetAllHistories()
+        {
+            return from u in db.Histories
+                   orderby u.NotedDate descending
+                   select u;
+        }
+        public IEnumerable<Data.Email> GetAllEmailAlerts()
+        {
+            return from u in db.Emails
+                   orderby u.NotedDate descending
                    select u;
         }
         public IEnumerable<Data.Status> GetAllStatuses()

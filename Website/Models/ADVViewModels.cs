@@ -10,8 +10,8 @@ namespace Website.Models
     public class SearchResult
     {
         public string Keyword { get; set; }
-        public List<DetailURLViewModels> URLs { get; set; }
-        public List<IndexDetailModel> Links { get; set; }
+        public PagedList.IPagedList<Service.ADV.SearchURL> URLs { get; set; }
+        public PagedList.IPagedList<IndexDetailModel> Links { get; set; }
         public List<KeywordListViewModels> RelativeKeywords { get; set; }
         public int PriceOrder { get; set; }
         public string FromPrice { get; set; }

@@ -19,6 +19,8 @@ namespace Data
             this.Campaigns = new HashSet<Campaign>();
             this.TransactionHistories = new HashSet<TransactionHistory>();
             this.Links = new HashSet<Link>();
+            this.Histories = new HashSet<History>();
+            this.Emails = new HashSet<Email>();
         }
     
         public string Phone { get; set; }
@@ -41,5 +43,7 @@ namespace Data
         public virtual Status Status { get; set; }
         public virtual ICollection<TransactionHistory> TransactionHistories { get; set; }
         public virtual ICollection<Link> Links { get; set; }
+        public virtual ICollection<History> Histories { get; set; }
+        public virtual ICollection<Email> Emails { get; set; }
     }
 }

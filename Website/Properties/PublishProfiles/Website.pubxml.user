@@ -37,7 +37,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/15/2016 10:37:23</publishTime>
     </File>
     <File Include="bin/Data.dll">
-      <publishTime>09/04/2016 00:33:50</publishTime>
+      <publishTime>09/11/2016 23:30:43</publishTime>
     </File>
     <File Include="bin/DataAnnotationsExtensions.ClientValidation.dll">
       <publishTime>03/16/2016 23:34:43</publishTime>
@@ -58,7 +58,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/13/2016 01:44:16</publishTime>
     </File>
     <File Include="bin/Lib.dll">
-      <publishTime>08/26/2016 23:42:53</publishTime>
+      <publishTime>09/11/2016 23:30:00</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>02/19/2016 22:53:40</publishTime>
@@ -112,7 +112,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2016 15:02:48</publishTime>
     </File>
     <File Include="bin/Service.dll">
-      <publishTime>09/08/2016 06:29:39</publishTime>
+      <publishTime>09/11/2016 23:30:44</publishTime>
     </File>
     <File Include="bin/SimpleCrypto.dll">
       <publishTime>02/22/2016 22:51:36</publishTime>
@@ -139,7 +139,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/24/2016 00:10:57</publishTime>
     </File>
     <File Include="bin/vi/Website.resources.dll">
-      <publishTime>09/08/2016 06:29:41</publishTime>
+      <publishTime>09/11/2016 23:30:45</publishTime>
     </File>
     <File Include="bin/WebActivator.dll">
       <publishTime>03/16/2016 23:34:43</publishTime>
@@ -148,7 +148,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/15/2016 10:37:23</publishTime>
     </File>
     <File Include="bin/Website.dll">
-      <publishTime>09/08/2016 06:29:40</publishTime>
+      <publishTime>09/11/2016 23:30:45</publishTime>
     </File>
     <File Include="Content/adv.css">
       <publishTime>08/26/2016 00:31:35</publishTime>
@@ -553,7 +553,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/27/2016 23:41:36</publishTime>
     </File>
     <File Include="Views/ADV/Search.cshtml">
-      <publishTime>09/07/2016 23:43:09</publishTime>
+      <publishTime>09/11/2016 10:48:40</publishTime>
     </File>
     <File Include="Views/ADV/URLDetail.cshtml">
       <publishTime>08/11/2016 23:53:50</publishTime>
@@ -643,7 +643,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/01/2016 23:48:41</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>07/12/2016 22:56:00</publishTime>
+      <publishTime>09/09/2016 01:01:30</publishTime>
     </File>
     <File Include="Views/Index/Analyse.cshtml">
       <publishTime>09/06/2016 23:40:53</publishTime>
@@ -759,6 +759,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Manage/Delete.cshtml">
       <publishTime>04/01/2016 23:52:46</publishTime>
     </File>
+    <File Include="Views/Manage/EmailAlerts.cshtml">
+      <publishTime>09/11/2016 23:29:22</publishTime>
+    </File>
     <File Include="Views/Manage/ForgotPassword.cshtml">
       <publishTime>04/25/2016 01:40:10</publishTime>
     </File>
@@ -769,7 +772,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/04/2016 23:00:07</publishTime>
     </File>
     <File Include="Views/Manage/History.cshtml">
-      <publishTime>07/13/2016 23:55:33</publishTime>
+      <publishTime>09/11/2016 15:37:58</publishTime>
     </File>
     <File Include="Views/Manage/Index.cshtml">
       <publishTime>07/06/2016 06:16:00</publishTime>
@@ -799,7 +802,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/01/2016 23:48:41</publishTime>
     </File>
     <File Include="Views/Shared/_Footer.cshtml">
-      <publishTime>07/06/2016 23:26:36</publishTime>
+      <publishTime>09/08/2016 19:16:48</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>07/06/2016 06:17:15</publishTime>
@@ -808,7 +811,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/06/2016 06:15:20</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>09/07/2016 20:49:47</publishTime>
+      <publishTime>09/11/2016 23:10:10</publishTime>
     </File>
     <File Include="Views/Shared/_Logo.cshtml">
       <publishTime>04/01/2016 23:48:41</publishTime>

@@ -68,10 +68,10 @@
                             <li>@Html.ActionLink("Index URL", "detechurl", "index", routeValues: null, htmlAttributes: new { id = "indexURLLink" })</li>
                             <li>@Html.ActionLink("URL Management", "index", "index", routeValues: null, htmlAttributes: new { id = "indexManagementLink" })</li>
                             <li>@Html.ActionLink(@Website.App_LocalResources.LanguageLabel.Advertising, "index", "adv", null, htmlAttributes: new { id = "lnkADV" })</li>
-                            <li class="ui-state-disabled">@Html.ActionLink("Activity Log", "index", "adv", null, htmlAttributes: new { id = "lnkADV" })</li>
-                            <li class="ui-state-disabled">@Html.ActionLink("Email Alerts", "index", "adv", null, htmlAttributes: new { id = "lnkADV" })</li>
+                            <li>@Html.ActionLink("Activity Log", "history", "manage", null, htmlAttributes: new { id = "lnkHistory" })</li>
+                            <li>@Html.ActionLink("Email Alerts", "emailalerts", "manage", null, htmlAttributes: new { id = "lnkEmailAlert" })</li>
                             <li><a href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
-                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Sign out everywhere</a></li>
+                            <li class="ui-state-disabled"><a href="javascript:document.getElementById('logoutForm').submit()">Sign out everywhere</a></li>
                         </ul>
                     </div>
                 </div>

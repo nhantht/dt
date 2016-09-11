@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="dtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ActionList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
   <EntityType Name="CampaignCategories">
     <Key>
       <PropertyRef Name="CampaignId" />
@@ -77,6 +84,29 @@
     <Property Name="DeviceTypeId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
     <Property Name="PictureURL" Type="nvarchar" MaxLength="200" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Emails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NotedDate" Type="datetime" Nullable="false" />
+    <Property Name="RelativeUser" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="ToEmail" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Message" Type="ntext" Nullable="false" />
+    <Property Name="ActionId" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="History">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActionId" Type="smallint" Nullable="false" />
+    <Property Name="NotedDate" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="CreatedUser" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Object" Type="nvarchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="Keywords">
     <Key>
@@ -399,6 +429,54 @@ warning 6002: The table/view 'demo_restophohoi_com_db.dbo.View_Users' does not h
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Emails_ActionList">
+    <End Role="ActionList" Type="Self.ActionList" Multiplicity="1" />
+    <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionList">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Emails">
+        <PropertyRef Name="ActionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Emails_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Phone" />
+      </Principal>
+      <Dependent Role="Emails">
+        <PropertyRef Name="RelativeUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_History_ActionList">
+    <End Role="ActionList" Type="Self.ActionList" Multiplicity="1" />
+    <End Role="History" Type="Self.History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionList">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="History">
+        <PropertyRef Name="ActionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_History_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="History" Type="Self.History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Phone" />
+      </Principal>
+      <Dependent Role="History">
+        <PropertyRef Name="CreatedUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Keywords_Keywords">
     <End Role="Keywords" Type="Self.Keywords" Multiplicity="1" />
     <End Role="Keywords1" Type="Self.Keywords" Multiplicity="0..1" />
@@ -610,6 +688,7 @@ warning 6002: The table/view 'demo_restophohoi_com_db.dbo.View_Users' does not h
   </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="dtModelStoreContainer">
+    <EntitySet Name="ActionList" EntityType="Self.ActionList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CampaignCategories" EntityType="Self.CampaignCategories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Campaigns" EntityType="Self.Campaigns" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
@@ -619,6 +698,8 @@ warning 6002: The table/view 'demo_restophohoi_com_db.dbo.View_Users' does not h
     <EntitySet Name="Devices" EntityType="Self.Devices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DeviceTypes" EntityType="Self.DeviceTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DeviceTypeURL" EntityType="Self.DeviceTypeURL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Emails" EntityType="Self.Emails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Keywords" EntityType="Self.Keywords" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Links" EntityType="Self.Links" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NegativeMarchs" EntityType="Self.NegativeMarchs" Schema="dbo" store:Type="Tables" />
@@ -716,6 +797,22 @@ warning 6002: The table/view 'demo_restophohoi_com_db.dbo.View_Users' does not h
     <AssociationSet Name="FK_DeviceURL_Devices" Association="Self.FK_DeviceURL_Devices">
       <End Role="DeviceTypes" EntitySet="DeviceTypes" />
       <End Role="DeviceTypeURL" EntitySet="DeviceTypeURL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emails_ActionList" Association="Self.FK_Emails_ActionList">
+      <End Role="ActionList" EntitySet="ActionList" />
+      <End Role="Emails" EntitySet="Emails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emails_Users" Association="Self.FK_Emails_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Emails" EntitySet="Emails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_History_ActionList" Association="Self.FK_History_ActionList">
+      <End Role="ActionList" EntitySet="ActionList" />
+      <End Role="History" EntitySet="History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_History_Users" Association="Self.FK_History_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="History" EntitySet="History" />
     </AssociationSet>
     <AssociationSet Name="FK_Keywords_Keywords" Association="Self.FK_Keywords_Keywords">
       <End Role="Keywords" EntitySet="Keywords" />

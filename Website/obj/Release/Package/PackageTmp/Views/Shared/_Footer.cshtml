@@ -42,7 +42,9 @@
             if ($("body").height() <= $(window).height()) {
                 $("body").height($(window).height());
                 $("#footer").addClass("footer");
-                $(".middle-content").height($("#footer").position().top - $(".middle-content").position().top - 5);
+                if ($(".middle-content").length > 0) {
+                    $(".middle-content").height($("#footer").position().top - $(".middle-content").position().top - 5);
+                }
             }
         }
     }

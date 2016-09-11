@@ -1,7 +1,7 @@
-﻿@model PagedList.IPagedList<Admin.Models.HistoryViewModel>
+﻿@model PagedList.IPagedList<Admin.Models.EmailViewModel>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Action Records";
+    ViewBag.Title = "Email Alerts";
     Service.User.Manage manageObj = new Service.User.Manage();
     List<SelectListItem> actionList = (from x in manageObj.GetActionList()
                                        select new SelectListItem()
@@ -12,14 +12,14 @@
                                        }).ToList();
 
     List<SelectListItem> userList = new List<SelectListItem>();
-    
+
     (from x in manageObj.GetAllUsers()
-                                     select new SelectListItem()
-                                     {
-                                         Text = x.Phone,
-                                         Value = x.Phone,
-                                         Selected = (ViewBag.RelativeUser != null && x.Phone == ViewBag.RelativeUser)
-                                     }).ToList();
+     select new SelectListItem()
+     {
+         Text = x.Phone,
+         Value = x.Phone,
+         Selected = (ViewBag.RelativeUser != null && x.Phone == ViewBag.RelativeUser)
+     }).ToList();
     string optionLable = null;
     if (User.Identity.Name == Lib.Common.Variables.AdminUser)
     {
@@ -32,7 +32,8 @@
                         Selected = (ViewBag.RelativeUser != null && x.Phone == ViewBag.RelativeUser)
                     }).ToList();
     }
-    else {
+    else
+    {
         userList.Add(new SelectListItem
         {
             Text = User.Identity.Name,
@@ -40,7 +41,7 @@
             Selected = true
         });
     }
-                                     
+
     if (ViewBag.FromDate.ToString().Length == 0)
     {
         ViewBag.FromDate = DateTime.Now.ToString("MM/dd/yyyy");
@@ -82,13 +83,16 @@
                 Noted Date
             </th>
             <th class="text-left">
-                Description
+                Title
+            </th>
+            <th class="text-left">
+                Message
             </th>
             <th class="text-left">
                 Relative User
             </th>
             <th class="text-left">
-                Object
+                Receiver Email
             </th>
         </tr>
 
@@ -102,26 +106,33 @@
                     @Html.DisplayFor(modelItem => item.NotedDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    <a id="message_@item.Id" href="javascript:showMessage('message_@item.Id')">Show Message</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RelativeUser)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Object)
+                    @Html.DisplayFor(modelItem => item.ToEmail)
                 </td>
+            </tr>
+            <tr class="email-content">
+                <td colspan="6">@Html.DisplayFor(modelItem => item.Message)</td>
             </tr>
         }
     </table>
     <br />
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-    @Html.PagedListPager(Model, page => Url.Action("history",
+    @Html.PagedListPager(Model, page => Url.Action("emailalerts",
     new { page, currentFilter = ViewBag.CurrentFilter }))
 </div>
 <script>
     $(document).ready(function () {
         $(".datepicker").datepicker();
+        $(".email-content").hide();
         //Set filters
         setInitialDates();
         //Events
@@ -141,9 +152,17 @@
                 userId = $("#lstUser").val();
             }
             var filterString = escape(actionId + "###" + fromDate + "###" + toDate + "###" + userId);
-            document.location = "history?currentFilter=" + filterString + "&page=1";
+            document.location = "emailalerts?currentFilter=" + filterString + "&page=1";
         });
     });
+    function showMessage(id) {
+        $("#" + id).closest("tr").next().toggle();
+        if ($("#" + id).closest("tr").next().css("display") == "none") {
+            $("#" + id).text("Show Message");
+        } else {
+            $("#" + id).text("Hide Message");
+        }
+    }
     function setInitialDates() {
         //Set filters
         if ($("#datFromDate").val().trim().length == 0) {

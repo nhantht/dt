@@ -53,6 +53,9 @@ namespace Data
         public virtual DbSet<Keyword> Keywords { get; set; }
         public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<Link> Links { get; set; }
+        public virtual DbSet<ActionList> ActionLists { get; set; }
+        public virtual DbSet<History> Histories { get; set; }
+        public virtual DbSet<Email> Emails { get; set; }
     
         public virtual ObjectResult<SP_GetURLAllDevices_Result> SP_GetURLAllDevices(Nullable<decimal> dEVICE_ID, string pICTUREURL, Nullable<decimal> uRL_ID)
         {

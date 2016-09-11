@@ -54,13 +54,23 @@ namespace Website.Controllers
             });
             return View();
         }
-        public ActionResult Search(string keyword, string priceOrder, string fromPrice, string toPrice, string currency)
+        [Authorize]
+        public ActionResult ReportInvalidURL(string reason, string URL)
         {
+            Service.User.Manage manageObj = new Service.User.Manage();
+            bool result = manageObj.ReportInvalidURL(URL, reason, User.Identity.Name);
+            return Json(result);
+        }
+        public ActionResult Search(string keyword, string priceOrder, string fromPrice, string toPrice, string currency, int page = 1)
+        {
+            int pageSize = 10;
             SearchResult result = new SearchResult();
             Service.ADV.Keyword keywordObj = new Service.ADV.Keyword();
-            result.Links = new List<IndexDetailModel>();
+            List<IndexDetailModel> tempLinks = new List<IndexDetailModel>();
+            result.Links = tempLinks.ToPagedList(page, pageSize);
             result.RelativeKeywords = new List<KeywordListViewModels>();
-            result.URLs = new List<DetailURLViewModels>();
+            List<Service.ADV.SearchURL> tempURLs = new List<Service.ADV.SearchURL>();
+            result.URLs = tempURLs.ToPagedList(page, pageSize);
 
             if (priceOrder == null)
             {
@@ -87,7 +97,7 @@ namespace Website.Controllers
                                                                {
                                                                    Keyword = u.Keyword1
                                                                });
-                    result.Links.AddRange(from u in linkObj.GetByKeyword(key, priceOrder, fromPrice, toPrice, currency)
+                    tempLinks.AddRange(from u in linkObj.GetByKeyword(key, priceOrder, fromPrice, toPrice, currency)
                                           select new Models.IndexDetailModel
                                                     {
                                                         Id = u.Id,
@@ -98,12 +108,16 @@ namespace Website.Controllers
                                                         URL = u.URL,
                                                         Price = u.Price,
                                                         Rating = u.Rating,
-                                                        Reviews = u.Reviews
+                                                        Reviews = u.Reviews,
                                                     });
+
+                    tempURLs.AddRange(URL.GetByKeyword(key, priceOrder, fromPrice, toPrice, currency, 1));
                 }
                 result.RelativeKeywords = result.RelativeKeywords.Distinct().ToList();
-                result.Links = result.Links.Distinct().ToList();
+                result.Links = tempLinks.Distinct().ToPagedList(page, pageSize);
+                result.URLs = tempURLs.Distinct().ToPagedList(1, 90000);
             }
+
             return View(result);
         }
         public ActionResult GetURLContent(string url)

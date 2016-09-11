@@ -49,6 +49,13 @@
         <EntityTypeShape EntityType="dtModel.Schedule" Width="1.5" PointX="13.375" PointY="0.75" />
         <EntityTypeShape EntityType="dtModel.Link" Width="1.5" PointX="6" PointY="20.125" />
         <AssociationConnector Association="dtModel.FK_Links_Users" />
+        <EntityTypeShape EntityType="dtModel.ActionList" Width="1.5" PointX="6.75" PointY="17.875" />
+        <EntityTypeShape EntityType="dtModel.History" Width="1.5" PointX="9" PointY="20.625" />
+        <AssociationConnector Association="dtModel.FK_History_ActionList" />
+        <AssociationConnector Association="dtModel.FK_History_Users" />
+        <EntityTypeShape EntityType="dtModel.Email" Width="1.5" PointX="12.375" PointY="11.75" />
+        <AssociationConnector Association="dtModel.FK_Emails_ActionList" />
+        <AssociationConnector Association="dtModel.FK_Emails_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -10,6 +10,25 @@ using System.Threading.Tasks;
 namespace Service.ADV
 {
     #region models
+    public class SearchURL
+    {
+        public decimal Id { get; set; }
+        public string URL { get; set; }
+        public decimal Budget { get; set; }
+        public bool Status { get; set; }
+        public decimal CategoryId { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public Nullable<decimal> DisplayCurrencyId { get; set; }
+        public Nullable<decimal> DisplayLocationId { get; set; }
+        public Nullable<decimal> DisplayTimeId { get; set; }
+        public Nullable<int> DisplayTimes { get; set; }
+        public decimal Price { get; set; }
+        public string ShortDescription { get; set; }
+        public string Title { get; set; }
+        public decimal Rating { get; set; }
+        public string Picture { get; set; }
+        public decimal Reviews { get; set; }
+    }
     public class InputURLViewModels
     {
         public decimal Id { get; set; }
@@ -381,10 +400,56 @@ namespace Service.ADV
 
             return URLs;
         }
+        public IEnumerable<SearchURL> GetByKeyword(string keyword, string priceOrder, string fromPrice, string toPrice, string currency, int deviceType)
+        {
+            decimal price1 = 0;
+            decimal price2 = 0;
+
+            if (!string.IsNullOrEmpty(fromPrice))
+                price1 = decimal.Parse(fromPrice);
+            if (!string.IsNullOrEmpty(toPrice))
+                price2 = decimal.Parse(toPrice);
+
+            IEnumerable<SearchURL> result = from u in db.URLs
+                                            join v in db.PriceURLs on u.Id equals v.URLId
+                                            join w in db.DeviceTypeURLs on u.Id equals w.URLId
+                                            where v.Currency.Code == currency
+                                            && (u.URL1.Trim().ToLower().IndexOf(keyword.Trim().ToLower()) >= 0
+                                                    || w.DeviceType.Id == deviceType && w.Title.Trim().ToLower().IndexOf(keyword.Trim().ToLower()) >= 0)
+                                            && (string.IsNullOrEmpty(fromPrice)
+                                                    || v.Price >= price1)
+                                            && (string.IsNullOrEmpty(toPrice)
+                                                    || v.Price <= price2)
+                                            select new SearchURL()
+                                            {
+                                                Id = u.Id,
+                                                URL = u.URL1,
+                                                Title = string.Empty,
+                                                ShortDescription = w.Title,
+                                                Rating = 0,
+                                                Reviews = 0,
+                                                Price = v.Price,
+                                                Picture = w.PictureURL
+                                            };
+
+            if (int.Parse(priceOrder) == 2)
+            {
+                result = result.OrderBy(x => x.Price);
+            }
+            else
+            {
+                if (int.Parse(priceOrder) == 3)
+                {
+                    result = result.OrderByDescending(x => x.Price);
+                }
+            }
+
+            return result;
+        }
         public IEnumerable<DeviceTypeInput> GetURLDeviceList(decimal Id, string pictureURL, decimal URLId)
         {
             IEnumerable<DeviceTypeInput> devices = from c in db.SP_GetURLAllDeviceTypes2(Id, pictureURL, URLId)
-                                               select new DeviceTypeInput { DeviceTypeId = c.DeviceTypeId, ExistedDeviceTypeId = c.ExistedDeviceTypeId, Picture = c.Picture, Title = c.Title, ExistedTitle = c.ExistedTitle };
+                                                   select new DeviceTypeInput { DeviceTypeId = c.DeviceTypeId, ExistedDeviceTypeId = c.ExistedDeviceTypeId, Picture = c.Picture, Title = c.Title, ExistedTitle = c.ExistedTitle };
 
             return devices;
         }

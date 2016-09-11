@@ -135,4 +135,51 @@ namespace Admin.Models
         [DisplayFormat(DataFormatString = "{0:N0}")]
         public int Points { get; set; }
     }
+    public class HistoryViewModel
+    {
+        [Display(Name = "Action")]
+        public short ActionId { get; set; }
+
+        [Display(Name = "Action")]
+        public string ActionName { get; set; }
+
+        [Display(Name = "Noted Date")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy HH:mm:ss}")]
+        public DateTime NotedDate { get; set; }
+
+        [Display(Name = "Relative User")]
+        public string RelativeUser { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Display(Name = "Object")]
+        public string Object { get; set; }
+    }
+    public class EmailViewModel
+    {
+        [Display(Name = "Code")]
+        public decimal Id { get; set; }
+        [Display(Name = "For Action")]
+        public short ActionId { get; set; }
+
+        [Display(Name = "For Action")]
+        public string ActionName { get; set; }
+
+        [Display(Name = "Noted Date")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy HH:mm:ss}")]
+        public DateTime NotedDate { get; set; }
+
+        [Display(Name = "Relative User")]
+        public string RelativeUser { get; set; }
+
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Display(Name = "Message")]
+        public string Message { get; set; }
+
+        [Display(Name = "Receiver Email")]
+        public string ToEmail { get; set; }
+    }
 }
